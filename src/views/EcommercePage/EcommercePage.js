@@ -36,6 +36,7 @@ import face7 from "assets/img/faces/card-profile5-square.jpg";
 import face8 from "assets/img/faces/card-profile2-square.jpg";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
+import headersStyle from "assets/jss/material-kit-pro-react/views/sectionsSections/headersStyle.js";
 
 const useStyles = makeStyles(styles);
 
@@ -57,6 +58,7 @@ export default function EcommercePage() {
           color: "info"
         }}
       />
+
       <Parallax
         image={require("assets/img/examples/clark-street-merc.jpg")}
         filter="dark"

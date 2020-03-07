@@ -32,12 +32,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-  });
-  const classes = useStyles();
-
   const handleSubmit = e => {
     event.preventDefault();
     let data = {
@@ -55,6 +49,11 @@ export default function LoginPage() {
       .catch(err => console.log(err));
   };
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+  });
+  const classes = useStyles();
   return (
     <div>
       <Header
@@ -150,18 +149,12 @@ export default function LoginPage() {
                     />
                   </CardBody>
                   <div className={classes.textCenter}>
-                    <Button
-                      type="submit"
-                      value="Submit"
-                      round
-                      color="primary"
-                      size="lg"
-                    >
+                    <Button type="submit" round color="primary" size="lg">
                       Login
                     </Button>
                   </div>
                 </form>
-                <Button simple color="primary" size="lg">
+                <Button href="/signup-page" simple color="primary" size="lg">
                   Signup
                 </Button>
               </Card>

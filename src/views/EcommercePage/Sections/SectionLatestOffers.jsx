@@ -15,7 +15,7 @@ import Button from "components/CustomButtons/Button.js";
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui icons
-import Favorite from "@material-ui/icons/Favorite";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceSections/latestOffersStyle.js";
 
@@ -58,12 +58,12 @@ export default function SectionLatestOffers(props) {
                   <div className={classNames(classes.stats, classes.mlAuto)}>
                     <Tooltip
                       id="tooltip-top"
-                      title="Saved to Wishlist"
+                      title="Add to cart"
                       placement="top"
                       classes={{ tooltip: classes.tooltip }}
                     >
                       <Button justIcon simple color="rose">
-                        <Favorite />
+                        <ShoppingCartIcon />
                       </Button>
                     </Tooltip>
                   </div>

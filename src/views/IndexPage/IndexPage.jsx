@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // core components
@@ -14,7 +14,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Footer from "components/Footer/Footer.js";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
-import SectionLatestOffers from "views/EcommercePage/Sections/SectionLatestOffers.js";
+import SectionLatestOffers from "views/EcommercePage/Sections/SectionLatestOffers.jsx";
 import SectionProducts from "views/EcommercePage/Sections/SectionProducts.js";
 import SectionBlog from "views/EcommercePage/Sections/SectionBlog.js";
 // @material-ui/core components
@@ -25,17 +25,26 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui icons
 import Mail from "@material-ui/icons/Mail";
 
-
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
-
 
 const useStyles = makeStyles(styles);
 
 export default function EcommercePage() {
+  const [products, setProducts] = useState([]);
+  const fetchProducts = () =>
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/product/all", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(err => console.log(err));
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-  });
+    fetchProducts();
+  }, []); //Probably not a good approach.
   const classes = useStyles();
   return (
     <div>
@@ -49,7 +58,7 @@ export default function EcommercePage() {
           color: "info"
         }}
       />
-   <Parallax
+      <Parallax
         image={require("assets/img/examples/clark-street-merc.jpg")}
         filter="dark"
         small
@@ -76,9 +85,12 @@ export default function EcommercePage() {
           </GridContainer>
         </div>
       </Parallax>
+
+      <div className={classNames(classes.main, classes.mainRaised)}>
+        <SectionLatestOffers products={products} />
+      </div>
+
       <SectionBlog />
-
-
     </div>
   );
 }

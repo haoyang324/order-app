@@ -40,12 +40,15 @@ import SignupPage from "views/SignupPage/SignupPage.jsx";
 import ErrorPage from "views/ErrorPage/ErrorPage.js";
 
 import IndexPage from "views/IndexPage/IndexPage.jsx";
+import AdminPage from "views/AdminPage/AdminPage.jsx";
 
 var hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
+      <Route path="/admin" component={AdminPage} />
+
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/blog-post" component={BlogPostPage} />
       <Route path="/blog-posts" component={BlogPostsPage} />

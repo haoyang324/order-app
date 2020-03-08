@@ -1,32 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
-import Drawer from "components/Drawer/Drawer.jsx";
-
-const drawerWidth = 240;
+import AdminNav from "components/AdminNav/AdminNav.jsx";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
-  },
-  appBar: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
   },
   toolbar: theme.mixins.toolbar,
   content: {
@@ -37,34 +19,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function AdminPage() {
   const classes = useStyles();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Admin
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        <Drawer mobileOpen={mobileOpen} onClose={handleDrawerToggle} />
-      </nav>
+      <AdminNav title="Admin" />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
@@ -102,9 +60,5 @@ export default function AdminPage() {
 }
 
 AdminPage.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   container: PropTypes.any
 };

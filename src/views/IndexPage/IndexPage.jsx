@@ -14,6 +14,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Footer from "components/Footer/Footer.js";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
+
 import SectionLatestOffers from "views/EcommercePage/Sections/SectionLatestOffers.jsx";
 import SectionProducts from "views/EcommercePage/Sections/SectionProducts.js";
 import SectionBlog from "views/EcommercePage/Sections/SectionBlog.js";
@@ -85,7 +86,6 @@ export default function EcommercePage() {
           </GridContainer>
         </div>
       </Parallax>
-
       <div className={classNames(classes.main, classes.mainRaised)}>
         <SectionLatestOffers products={products} />
       </div>

@@ -45,10 +45,7 @@ export default function LoginPage() {
       body: JSON.stringify(data)
     })
       .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        localStorage.setItem("jwt", data.token);
-      })
+      .then(data => console.log(data))
       .catch(err => console.log(err));
   };
 

@@ -59,7 +59,7 @@ export default function SignUpPage({ ...rest }) {
       password: password
     };
 
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/", {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)

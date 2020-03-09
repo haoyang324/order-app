@@ -1,5 +1,7 @@
 import React from "react";
 import MaterialTable from "material-table";
+import Button from "@material-ui/core/Button";
+import EditIcon from "@material-ui/icons/Edit";
 
 export default function AdminOrdersTable() {
   const [state, setState] = React.useState({
@@ -39,6 +41,17 @@ export default function AdminOrdersTable() {
           maxWidth: 80
         },
         searchable: false
+      },
+      {
+        title: "Edit",
+        width: 50,
+        // field: "imgURL",
+        // eslint-disable-next-line react/display-name
+        render: rowData => (
+          <EditIcon
+            onClick={() => (window.location.href += "/edit/" + rowData._id)}
+          />
+        )
       }
     ],
     data: []
@@ -66,46 +79,18 @@ export default function AdminOrdersTable() {
 
   return (
     <MaterialTable
-      title="Products List"
+      title={
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => (window.location.href += "/add")}
+        >
+          Add Product
+        </Button>
+        // <AddIcon onClick={() => (window.location.href = "/products/add")} />
+      }
       columns={state.columns}
       data={state.data}
-      editable={{
-        // onRowAdd: newData =>
-        //   new Promise(resolve => {
-        //     setTimeout(() => {
-        //       resolve();
-        //       setState(prevState => {
-        //         const data = [...prevState.data];
-        //         data.push(newData);
-        //         return { ...prevState, data };
-        //       });
-        //     }, 600);
-        //   }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
-        onRowDelete: oldData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          })
-      }}
       options={{ pageSize: 10 }}
     />
   );

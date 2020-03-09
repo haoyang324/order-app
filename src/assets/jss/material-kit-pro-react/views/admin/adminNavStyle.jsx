@@ -6,7 +6,7 @@ import {
   hexToRgb
 } from "assets/jss/material-kit-pro-react.js";
 
-const adminPageStyle = theme => ({
+const adminNavStyle = theme => ({
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
@@ -33,14 +33,10 @@ const adminPageStyle = theme => ({
       display: "none"
     }
   },
-  toolbar: theme.mixins.toolbar,
+  // toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3)
   }
 });
 
-export default adminPageStyle;
+export default adminNavStyle;

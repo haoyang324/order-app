@@ -21,6 +21,10 @@ import { Router, Route, Switch } from "react-router";
 
 import "assets/scss/material-kit-pro-react.scss?v=1.8.0";
 
+// pages for admin
+import AdminHome from "views/AdminPages/AdminHome.jsx";
+import AdminOrdersPage from "views/AdminPages/AdminOrdersPage.jsx";
+
 // pages for this product
 import AboutUsPage from "views/AboutUsPage/AboutUsPage.js";
 import BlogPostPage from "views/BlogPostPage/BlogPostPage.js";
@@ -40,14 +44,14 @@ import SignupPage from "views/SignupPage/SignupPage.jsx";
 import ErrorPage from "views/ErrorPage/ErrorPage.js";
 
 import IndexPage from "views/IndexPage/IndexPage.jsx";
-import AdminPage from "views/AdminPage/AdminPage.jsx";
 
 var hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      <Route path="/admin" component={AdminPage} />
+      <Route path="/admin/home" component={AdminHome} />
+      <Route path="/admin/orders" component={AdminOrdersPage} />
 
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/blog-post" component={BlogPostPage} />

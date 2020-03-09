@@ -21,10 +21,11 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PeopleIcon from "@material-ui/icons/People";
+import SettingsIcon from "@material-ui/icons/Settings";
 
-import adminPageStyle from "assets/jss/material-kit-pro-react/views/admin/adminNavStyle.jsx";
+import adminNavStyle from "assets/jss/material-kit-pro-react/views/admin/adminNavStyle.jsx";
 
-const useStyles = makeStyles(adminPageStyle);
+const useStyles = makeStyles(adminNavStyle);
 
 export default function AdminNav(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -38,32 +39,39 @@ export default function AdminNav(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
+      <List>
+        <ListItem>
+          <ListItemIcon>
+            <SettingsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Admin" />
+        </ListItem>
+      </List>
       <Divider />
       <List>
-        <ListItem button>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText primary="Home" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <AttachMoneyIcon />
-          </ListItemIcon>
-          <ListItemText primary="Orders" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <LocalOfferIcon />
-          </ListItemIcon>
-          <ListItemText primary="Products" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <PeopleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Customers" />
-        </ListItem>
+        {["Home", "Orders", "Products", "Customers"].map(text => (
+          <ListItem
+            button
+            onClick={() =>
+              (window.location.href = "/admin/" + text.toLowerCase())
+            }
+            selected={title === text}
+            key={text}
+          >
+            <ListItemIcon>
+              {text === "Home" ? (
+                <HomeIcon />
+              ) : text === "Orders" ? (
+                <AttachMoneyIcon />
+              ) : text === "Products" ? (
+                <LocalOfferIcon />
+              ) : (
+                <PeopleIcon />
+              )}
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
       </List>
       <Divider />
       <List>

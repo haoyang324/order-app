@@ -108,7 +108,10 @@ export default function AdminProductPage() {
         return fetch(process.env.REACT_APP_REST_API_LOCATION + "/product/add", {
           method: "POST",
           mode: "cors",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt")
+          },
           body: JSON.stringify(productData)
         });
       })

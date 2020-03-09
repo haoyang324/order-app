@@ -13,7 +13,7 @@ export default function AdminOrdersTable() {
         render: rowData => (
           <img
             alt={rowData.title}
-            style={{ height: 36, borderRadius: "50%" }}
+            style={{ height: 36, borderRadius: "10%" }}
             src={rowData.imgURL}
           />
         ),

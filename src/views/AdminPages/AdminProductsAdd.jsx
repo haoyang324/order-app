@@ -96,9 +96,9 @@ export default function AdminProductPage() {
       pricing: price,
       imgURL: ""
     };
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/image-upload", {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/image/upload", {
       method: "POST",
-      // headers: { "Content-Type": "multipart/form-data" },
+      headers: { Authorization: "Bearer " + localStorage.getItem("jwt") },
       body: image
     })
       .then(res => res.json())

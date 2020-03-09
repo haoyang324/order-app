@@ -25,6 +25,7 @@ import "assets/scss/material-kit-pro-react.scss?v=1.8.0";
 import AdminHome from "views/AdminPages/AdminHome.jsx";
 import AdminOrdersPage from "views/AdminPages/AdminOrdersPage.jsx";
 import AdminProductsPage from "views/AdminPages/AdminProductsPage.jsx";
+import AdminProductsAdd from "views/AdminPages/AdminProductsAdd.jsx";
 
 // pages for this product
 import AboutUsPage from "views/AboutUsPage/AboutUsPage.js";
@@ -53,6 +54,8 @@ ReactDOM.render(
     <Switch>
       <Route path="/admin/home" component={AdminHome} />
       <Route path="/admin/orders" component={AdminOrdersPage} />
+
+      <Route path="/admin/products/add" component={AdminProductsAdd} />
       <Route path="/admin/products" component={AdminProductsPage} />
 
       <Route path="/about-us" component={AboutUsPage} />

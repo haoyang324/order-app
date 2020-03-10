@@ -182,12 +182,12 @@ export default function AdminProductsAdd() {
                       <Button color="success" onClick={() => handleSubmit()}>
                         Submit
                       </Button>
-                      {/* {loading && (
+                      {loading && (
                         <CircularProgress
                           size={36}
                           className={classes.buttonProgress}
                         />
-                      )} */}
+                      )}
                     </span>
                   )}
                 </div>

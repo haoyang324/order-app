@@ -26,6 +26,7 @@ import AdminHome from "views/AdminPages/AdminHome.jsx";
 import AdminOrdersPage from "views/AdminPages/AdminOrdersPage.jsx";
 import AdminProductsPage from "views/AdminPages/AdminProductsPage.jsx";
 import AdminProductsAdd from "views/AdminPages/AdminProductsAdd.jsx";
+import AdminProductsEdit from "views/AdminPages/AdminProductsEdit.jsx";
 
 // pages for this product
 import AboutUsPage from "views/AboutUsPage/AboutUsPage.js";
@@ -56,6 +57,7 @@ ReactDOM.render(
       <Route path="/admin/orders" component={AdminOrdersPage} />
 
       <Route path="/admin/products/add" component={AdminProductsAdd} />
+      <Route path="/admin/products/:id" component={AdminProductsEdit} />
       <Route path="/admin/products" component={AdminProductsPage} />
 
       <Route path="/about-us" component={AboutUsPage} />

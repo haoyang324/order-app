@@ -45,6 +45,7 @@ export default function EcommercePage() {
     document.body.scrollTop = 0;
     fetchProducts();
   }, []); //Probably not a good approach.
+
   const classes = useStyles();
   return (
     <div>
@@ -85,7 +86,6 @@ export default function EcommercePage() {
           </GridContainer>
         </div>
       </Parallax>
-
       <div className={classNames(classes.main, classes.mainRaised)}>
         <SectionLatestOffers products={products} />
       </div>

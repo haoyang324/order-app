@@ -10,10 +10,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Grid from "@material-ui/core/Grid";
 import Slide from "@material-ui/core/Slide";
+import Snackbar from "@material-ui/core/Snackbar";
 import TextField from "@material-ui/core/TextField";
 
 import AdminNav from "components/Admin/AdminNav.jsx";
 import Button from "components/CustomButtons/Button.js";
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 
 // eslint-disable-next-line react/display-name
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -49,6 +51,11 @@ const useStyles = makeStyles(theme => ({
     left: "50%",
     marginTop: -12,
     marginLeft: -12
+  },
+  snackBar: {
+    position: "fixed",
+    top: "10%",
+    visibility: "none"
   }
 }));
 
@@ -60,7 +67,8 @@ export default function AdminProductsEdit(props) {
   const [file, setFile] = React.useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
-  const [, setSuccess] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [message, setMessage] = React.useState("");
 
   const [productName, setProductName] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -121,20 +129,28 @@ export default function AdminProductsEdit(props) {
         .then(data => {
           console.log(data);
           productData.imgURL = data.imageUrl;
-          setSuccess(true);
-          setLoading(false);
           return submitProduct(productData);
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+          setMessage(data.success);
+          setSuccess(true);
+          setLoading(false);
+          setTimeout(function() {
+            window.location = "/admin/products";
+          }, 1000);
+        })
         .catch(err => console.log(err));
     } else {
       submitProduct(productData)
         .then(res => res.json())
         .then(data => {
-          console.log(data);
+          setMessage(data.success);
           setSuccess(true);
           setLoading(false);
+          setTimeout(function() {
+            window.location = "/admin/products";
+          }, 1000);
         })
         .catch(err => console.log(err));
     }
@@ -148,7 +164,10 @@ export default function AdminProductsEdit(props) {
       }
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        setMessage(data.success);
+        setSuccess(true);
+      })
       .catch(err => console.log(err));
 
   const fetchProducts = () =>
@@ -175,6 +194,23 @@ export default function AdminProductsEdit(props) {
       <AdminNav title="Products" />
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        <Snackbar
+          open={success}
+          autoHideDuration={2000}
+          onClose={() => setSuccess(false)}
+        >
+          <SnackbarContent
+            className={classes.snackBar}
+            onClose={() => setSuccess(false)}
+            message={
+              <span>
+                <b>{message}</b>
+              </span>
+            }
+            color="success"
+            icon="check"
+          />
+        </Snackbar>
 
         <form action="">
           <Grid container spacing={3}>

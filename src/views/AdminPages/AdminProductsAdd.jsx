@@ -5,10 +5,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
+import Snackbar from "@material-ui/core/Snackbar";
 import TextField from "@material-ui/core/TextField";
 
 import AdminNav from "components/Admin/AdminNav.jsx";
 import Button from "components/CustomButtons/Button.js";
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 
 import defaultImage from "assets/img/image_placeholder.jpg";
 
@@ -50,13 +52,15 @@ export default function AdminProductsAdd() {
   const [file, setFile] = React.useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = React.useState(defaultImage);
   const [loading, setLoading] = React.useState(false);
-  const [, setSuccess] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [message, setMessage] = React.useState("");
 
   const [productName, setProductName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState("");
 
   let fileInput = React.createRef();
+
   const handleImageChange = e => {
     e.preventDefault();
     let reader = new FileReader();
@@ -69,14 +73,11 @@ export default function AdminProductsAdd() {
       reader.readAsDataURL(file);
     }
   };
+
   const handleClick = () => {
     fileInput.current.click();
   };
-  // const handleRemove = () => {
-  //   setFile(null);
-  //   setImagePreviewUrl(defaultImage);
-  //   fileInput.current.value = null;
-  // };
+
   const handleSubmit = () => {
     if (!loading) {
       setSuccess(false);
@@ -97,7 +98,6 @@ export default function AdminProductsAdd() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         productData.imgURL = data.imageUrl;
         return fetch(process.env.REACT_APP_REST_API_LOCATION + "/products", {
           method: "POST",
@@ -110,9 +110,12 @@ export default function AdminProductsAdd() {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        setMessage(data.success);
         setSuccess(true);
         setLoading(false);
+        setTimeout(function() {
+          window.location = "/admin/products";
+        }, 1000);
       })
       .catch(err => console.log(err));
   };
@@ -122,7 +125,23 @@ export default function AdminProductsAdd() {
       <AdminNav title="Products" />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-
+        <Snackbar
+          open={success}
+          autoHideDuration={2000}
+          onClose={() => setSuccess(false)}
+        >
+          <SnackbarContent
+            className={classes.snackBar}
+            onClose={() => setSuccess(false)}
+            message={
+              <span>
+                <b>{message}</b>
+              </span>
+            }
+            color="success"
+            icon="check"
+          />
+        </Snackbar>
         <form action="">
           <Grid container spacing={3}>
             <Grid item sm={12} md={6}>
@@ -176,9 +195,6 @@ export default function AdminProductsAdd() {
                       <Button color="info" onClick={() => handleClick()}>
                         Change
                       </Button>
-                      {/* <Button color="warning" onClick={() => handleRemove()}>
-                        Remove
-                      </Button> */}
                       <Button color="success" onClick={() => handleSubmit()}>
                         Submit
                       </Button>

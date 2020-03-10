@@ -92,7 +92,7 @@ export default function HeaderLinks(props) {
     <List className={classes.list + " " + classes.mlAuto}>
       <ListItem className={classes.listItem}>
         <Button
-          href="/admin/home"
+          href="/admin/products"
           className={classes.navLink}
           color="transparent"
         >

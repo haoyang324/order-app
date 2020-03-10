@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AdminPage() {
+export default function AdminProductPage() {
   const classes = useStyles();
 
   return (
@@ -31,6 +31,6 @@ export default function AdminPage() {
   );
 }
 
-AdminPage.propTypes = {
+AdminProductPage.propTypes = {
   container: PropTypes.any
 };

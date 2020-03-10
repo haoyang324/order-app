@@ -49,7 +49,7 @@ export default function AdminOrdersTable() {
         // eslint-disable-next-line react/display-name
         render: rowData => (
           <EditIcon
-            onClick={() => (window.location.href += "/edit/" + rowData._id)}
+            onClick={() => (window.location.href += "/" + rowData._id)}
           />
         )
       }
@@ -58,7 +58,7 @@ export default function AdminOrdersTable() {
   });
 
   const fetchProducts = () =>
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/product/all", {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/products", {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     })

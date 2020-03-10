@@ -33,7 +33,7 @@ const useStyles = makeStyles(styles);
 export default function EcommercePage() {
   const [products, setProducts] = useState([]);
   const fetchProducts = () =>
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/product/all", {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/products", {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     })
@@ -46,6 +46,7 @@ export default function EcommercePage() {
     document.body.scrollTop = 0;
     fetchProducts();
   }, []); //Probably not a good approach.
+
   const classes = useStyles();
   return (
     <div>
@@ -77,10 +78,10 @@ export default function EcommercePage() {
             >
               <div className={classes.brand}>
                 <h1 className={classes.title}>Index Page!</h1>
-                <h4>
+                {/* <h4>
                   Free global delivery for all products. Use coupon{" "}
                   <b>25summer</b> for an extra 25% Off
-                </h4>
+                </h4> */}
               </div>
             </GridItem>
           </GridContainer>
@@ -90,7 +91,7 @@ export default function EcommercePage() {
         <SectionLatestOffers products={products} />
       </div>
 
-      <SectionBlog />
+      {/* <SectionBlog /> */}
     </div>
   );
 }

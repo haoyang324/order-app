@@ -17,11 +17,11 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 // @material-ui/icons
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PeopleIcon from "@material-ui/icons/People";
-import SettingsIcon from "@material-ui/icons/Settings";
 
 import adminNavStyle from "assets/jss/material-kit-pro-react/views/admin/adminNavStyle.jsx";
 
@@ -40,11 +40,11 @@ export default function AdminNav(props) {
     <div>
       <div className={classes.toolbar} />
       <List>
-        <ListItem>
+        <ListItem button onClick={() => (window.location.href = "/")}>
           <ListItemIcon>
-            <SettingsIcon />
+            <ArrowBackIcon />
           </ListItemIcon>
-          <ListItemText primary="Admin" />
+          <ListItemText primary="Back To Store" />
         </ListItem>
       </List>
       <Divider />

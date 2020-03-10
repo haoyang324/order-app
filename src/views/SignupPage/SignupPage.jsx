@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -35,6 +35,10 @@ import image from "assets/img/bg7.jpg";
 const useStyles = makeStyles(signupPageStyle);
 
 export default function SignUpPage({ ...rest }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [checked, setChecked] = React.useState([1]);
   const handleToggle = value => {
     const currentIndex = checked.indexOf(value);
@@ -46,6 +50,25 @@ export default function SignUpPage({ ...rest }) {
     }
     setChecked(newChecked);
   };
+
+  const handleSubmit = e => {
+    event.preventDefault();
+    let data = {
+      name: name,
+      email: email,
+      password: password
+    };
+
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+  };
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
@@ -119,13 +142,14 @@ export default function SignUpPage({ ...rest }) {
                         {` `}
                         <h4 className={classes.socialTitle}>or be classical</h4>
                       </div>
-                      <form className={classes.form}>
+                      <form onSubmit={handleSubmit} className={classes.form}>
                         <CustomInput
                           formControlProps={{
                             fullWidth: true,
                             className: classes.customFormControlClasses
                           }}
                           inputProps={{
+                            onChange: e => setName(e.target.value),
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -143,6 +167,9 @@ export default function SignUpPage({ ...rest }) {
                             className: classes.customFormControlClasses
                           }}
                           inputProps={{
+                            onChange: e => setEmail(e.target.value),
+                            placeholder: "Email...",
+                            type: "email",
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -150,8 +177,7 @@ export default function SignUpPage({ ...rest }) {
                               >
                                 <Email className={classes.inputAdornmentIcon} />
                               </InputAdornment>
-                            ),
-                            placeholder: "Email..."
+                            )
                           }}
                         />
                         <CustomInput
@@ -160,6 +186,9 @@ export default function SignUpPage({ ...rest }) {
                             className: classes.customFormControlClasses
                           }}
                           inputProps={{
+                            onChange: e => setPassword(e.target.value),
+                            placeholder: "Password...",
+                            type: "password",
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -169,8 +198,7 @@ export default function SignUpPage({ ...rest }) {
                                   lock_outline
                                 </Icon>
                               </InputAdornment>
-                            ),
-                            placeholder: "Password..."
+                            )
                           }}
                         />
                         <FormControlLabel
@@ -200,7 +228,7 @@ export default function SignUpPage({ ...rest }) {
                           }
                         />
                         <div className={classes.textCenter}>
-                          <Button round color="primary">
+                          <Button type="submit" round color="primary" size="lg">
                             Get started
                           </Button>
                         </div>

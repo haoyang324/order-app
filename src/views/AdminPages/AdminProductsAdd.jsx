@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AdminProductPage() {
+export default function AdminProductsAdd() {
   const classes = useStyles();
 
   const [file, setFile] = React.useState(null);
@@ -55,8 +55,6 @@ export default function AdminProductPage() {
   const [productName, setProductName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState("");
-
-  const timer = React.useRef();
 
   let fileInput = React.createRef();
   const handleImageChange = e => {
@@ -83,10 +81,6 @@ export default function AdminProductPage() {
     if (!loading) {
       setSuccess(false);
       setLoading(true);
-      timer.current = setTimeout(() => {
-        setSuccess(true);
-        setLoading(false);
-      }, 4000);
     }
     const image = new FormData();
     image.append("image", file);
@@ -96,7 +90,7 @@ export default function AdminProductPage() {
       pricing: price,
       imgURL: ""
     };
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/image/upload", {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/images", {
       method: "POST",
       headers: { Authorization: "Bearer " + localStorage.getItem("jwt") },
       body: image
@@ -105,9 +99,8 @@ export default function AdminProductPage() {
       .then(data => {
         console.log(data);
         productData.imgURL = data.imageUrl;
-        return fetch(process.env.REACT_APP_REST_API_LOCATION + "/product/add", {
+        return fetch(process.env.REACT_APP_REST_API_LOCATION + "/products", {
           method: "POST",
-          mode: "cors",
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + localStorage.getItem("jwt")
@@ -116,7 +109,11 @@ export default function AdminProductPage() {
         });
       })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data);
+        setSuccess(true);
+        setLoading(false);
+      })
       .catch(err => console.log(err));
   };
 
@@ -140,6 +137,7 @@ export default function AdminProductPage() {
                   onChange={e => setProductName(e.target.value)}
                 />
                 <TextField
+                  required
                   fullWidth
                   multiline
                   margin="normal"
@@ -184,12 +182,12 @@ export default function AdminProductPage() {
                       <Button color="success" onClick={() => handleSubmit()}>
                         Submit
                       </Button>
-                      {loading && (
+                      {/* {loading && (
                         <CircularProgress
                           size={36}
                           className={classes.buttonProgress}
                         />
-                      )}
+                      )} */}
                     </span>
                   )}
                 </div>
@@ -202,6 +200,6 @@ export default function AdminProductPage() {
   );
 }
 
-AdminProductPage.propTypes = {
+AdminProductsAdd.propTypes = {
   container: PropTypes.any
 };

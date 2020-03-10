@@ -32,7 +32,7 @@ const useStyles = makeStyles(styles);
 export default function EcommercePage() {
   const [products, setProducts] = useState([]);
   const fetchProducts = () =>
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/product/all", {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/products", {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     })

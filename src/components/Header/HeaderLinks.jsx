@@ -64,7 +64,7 @@ export default function HeaderLinks(props) {
   };
   var onClickSections = {};
 
-  const { dropdownHoverColor, cart } = props;
+  const { dropdownHoverColor, numOfType } = props;
   const classes = useStyles();
   return (
     <List className={classes.list + " " + classes.mlAuto}>
@@ -108,7 +108,7 @@ export default function HeaderLinks(props) {
         </Button>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Badge badgeContent={new Set(cart).size} color="secondary">
+        <Badge badgeContent={numOfType} color="secondary">
           <Button
             href="/shopping-cart"
             color={window.innerWidth < 960 ? "info" : "white"}

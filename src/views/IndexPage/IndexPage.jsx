@@ -1,5 +1,4 @@
-/*eslint-disable*/
-import React, { useState } from "react";
+import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // core components
@@ -7,24 +6,11 @@ import Header from "components/Header/Header.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Parallax from "components/Parallax/Parallax.js";
-import Button from "components/CustomButtons/Button.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Footer from "components/Footer/Footer.js";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
-
 import SectionOffers from "views/EcommercePage/Sections/SectionOffers.jsx";
-import SectionProducts from "views/EcommercePage/Sections/SectionProducts.js";
-import SectionBlog from "views/EcommercePage/Sections/SectionBlog.js";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import InputAdornment from "@material-ui/core/InputAdornment";
-// @material-ui icons
-import Mail from "@material-ui/icons/Mail";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
 
@@ -33,18 +19,27 @@ const useStyles = makeStyles(styles);
 export default function EcommercePage() {
   const [products, setProducts] = React.useState([]);
   const [cart, setCart] = React.useState([]);
-
-  // const cart = new Map();
+  const [numOfType, setNumOfType] = React.useState(0);
 
   const addToCart = product => {
-    setCart(i => i.concat(product._id));
-    console.log();
-    localStorage.setItem("shoppingCart", cart);
-    // cart.set(
-    //   product._id,
-    //   cart.has(product._id) ? cart.get(product._id) + 1 : 1
-    // );
+    let tempCart = cart;
+    const productInCart = tempCart.find(element => element._id == product._id);
+    if (productInCart) {
+      productInCart["name"] = "testname";
+      productInCart["quantity"] += 1;
+    } else {
+      tempCart.push({
+        _id: product._id,
+        title: product.title,
+        imgURL: product.imgURL,
+        quantity: 1
+      });
+    }
+    setCart(tempCart);
+    setNumOfType(cart.length);
+    localStorage.setItem("shoppingCartProducts", JSON.stringify(tempCart));
   };
+
   const fetchProducts = () =>
     fetch(process.env.REACT_APP_REST_API_LOCATION + "/products", {
       method: "GET",
@@ -54,12 +49,21 @@ export default function EcommercePage() {
       .then(data => setProducts(data))
       .catch(err => console.log(err));
 
+  const getProductsFromLocalStorage = () => {
+    const productsInLocalStorage = JSON.parse(
+      localStorage.getItem("shoppingCartProducts")
+    );
+    if (productsInLocalStorage) {
+      setCart(productsInLocalStorage);
+      setNumOfType(productsInLocalStorage.length);
+    }
+  };
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     fetchProducts();
-    // Get the shopping cart state from local storage
-    setCart(localStorage.getItem("shoppingCart").split(","));
+    getProductsFromLocalStorage();
   }, []); //Probably not a good approach.
 
   const classes = useStyles();
@@ -67,7 +71,7 @@ export default function EcommercePage() {
     <div>
       <Header
         brand="Brand Name"
-        links={<HeaderLinks dropdownHoverColor="info" cart={cart} />}
+        links={<HeaderLinks dropdownHoverColor="info" numOfType={numOfType} />}
         fixed
         color="transparent"
         changeColorOnScroll={{

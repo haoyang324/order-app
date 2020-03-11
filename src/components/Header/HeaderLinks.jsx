@@ -73,7 +73,8 @@ export default function HeaderLinks(props) {
           href="/admin/products"
           className={classes.navLink}
           color="transparent"
-        >
+          target="_blank"
+          >
           Admin
         </Button>
       </ListItem>
@@ -109,10 +110,9 @@ export default function HeaderLinks(props) {
       <ListItem className={classes.listItem}>
         <Badge badgeContent={new Set(cart).size} color="secondary">
           <Button
-            href="#pablo"
+            href="/shopping-cart"
             color={window.innerWidth < 960 ? "info" : "white"}
             target="_blank"
-            onClick={e => e.preventDefault()}
             className={classes.navButton}
             round
           >

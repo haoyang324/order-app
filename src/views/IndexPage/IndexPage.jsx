@@ -39,7 +39,7 @@ export default function EcommercePage() {
   const addToCart = product => {
     setCart(i => i.concat(product._id));
     console.log();
-
+    localStorage.setItem("shoppingCart", cart);
     // cart.set(
     //   product._id,
     //   cart.has(product._id) ? cart.get(product._id) + 1 : 1
@@ -58,6 +58,8 @@ export default function EcommercePage() {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     fetchProducts();
+    // Get the shopping cart state from local storage
+    setCart(localStorage.getItem("shoppingCart").split(","));
   }, []); //Probably not a good approach.
 
   const classes = useStyles();

@@ -42,7 +42,7 @@ import PricingPage from "views/PricingPage/PricingPage.js";
 import ProfilePage from "views/ProfilePage/ProfilePage.js";
 import ProductPage from "views/ProductPage/ProductPage.js";
 import SectionsPage from "views/SectionsPage/SectionsPage.js";
-import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.js";
+import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.jsx";
 import SignupPage from "views/SignupPage/SignupPage.jsx";
 import ErrorPage from "views/ErrorPage/ErrorPage.js";
 
@@ -60,6 +60,10 @@ ReactDOM.render(
       <Route path="/admin/products/:id" component={AdminProductsEdit} />
       <Route path="/admin/products" component={AdminProductsPage} />
 
+      <Route path="/signup-page" component={SignupPage} />
+      <Route path="/login-page" component={LoginPage} />
+      <Route path="/shopping-cart" component={ShoppingCartPage} />
+
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/blog-post" component={BlogPostPage} />
       <Route path="/blog-posts" component={BlogPostsPage} />
@@ -67,13 +71,10 @@ ReactDOM.render(
       <Route path="/contact-us" component={ContactUsPage} />
       <Route path="/ecommerce-page" component={EcommercePage} />
       <Route path="/landing-page" component={LandingPage} />
-      <Route path="/login-page" component={LoginPage} />
       <Route path="/pricing" component={PricingPage} />
       <Route path="/profile-page" component={ProfilePage} />
       <Route path="/product-page" component={ProductPage} />
       <Route path="/sections" component={SectionsPage} />
-      <Route path="/shopping-cart-page" component={ShoppingCartPage} />
-      <Route path="/signup-page" component={SignupPage} />
       <Route path="/error-page" component={ErrorPage} />
       <Route path="/presentation-page" component={PresentationPage} />
       <Route path="/" component={IndexPage} />

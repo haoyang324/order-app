@@ -15,7 +15,7 @@ import Footer from "components/Footer/Footer.js";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 
-import SectionLatestOffers from "views/EcommercePage/Sections/SectionLatestOffers.jsx";
+import SectionOffers from "views/EcommercePage/Sections/SectionOffers.jsx";
 import SectionProducts from "views/EcommercePage/Sections/SectionProducts.js";
 import SectionBlog from "views/EcommercePage/Sections/SectionBlog.js";
 // @material-ui/core components
@@ -31,7 +31,20 @@ import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
 const useStyles = makeStyles(styles);
 
 export default function EcommercePage() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = React.useState([]);
+  const [cart, setCart] = React.useState([]);
+
+  // const cart = new Map();
+
+  const addToCart = product => {
+    setCart(i => i.concat(product._id));
+    console.log();
+
+    // cart.set(
+    //   product._id,
+    //   cart.has(product._id) ? cart.get(product._id) + 1 : 1
+    // );
+  };
   const fetchProducts = () =>
     fetch(process.env.REACT_APP_REST_API_LOCATION + "/products", {
       method: "GET",
@@ -52,7 +65,7 @@ export default function EcommercePage() {
     <div>
       <Header
         brand="Brand Name"
-        links={<HeaderLinks dropdownHoverColor="info" />}
+        links={<HeaderLinks dropdownHoverColor="info" cart={cart} />}
         fixed
         color="transparent"
         changeColorOnScroll={{
@@ -88,7 +101,7 @@ export default function EcommercePage() {
         </div>
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <SectionLatestOffers products={products} />
+        <SectionOffers products={products} addToCart={addToCart} />
       </div>
 
       {/* <SectionBlog /> */}

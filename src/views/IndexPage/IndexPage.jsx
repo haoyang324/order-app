@@ -23,7 +23,7 @@ export default function EcommercePage() {
 
   const addToCart = product => {
     let tempCart = cart;
-    const productInCart = tempCart.find(element => element._id == product._id);
+    const productInCart = tempCart.find(element => element._id === product._id);
     if (productInCart) {
       productInCart["name"] = "testname";
       productInCart["quantity"] += 1;

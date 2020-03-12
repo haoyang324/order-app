@@ -2,7 +2,7 @@ import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // core components
-import Header from "components/Header/Header.js";
+import Header from "components/Header/Header.jsx";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Parallax from "components/Parallax/Parallax.js";
@@ -72,7 +72,10 @@ export default function EcommercePage() {
     <div>
       <Header
         brand="Brand Name"
-        links={<HeaderLinks dropdownHoverColor="info" numOfType={numOfType} />}
+        links={
+          <HeaderLinks dropdownHoverColor="info" badgeNumber={numOfType} />
+        }
+        badgeNumber={numOfType}
         fixed
         color="transparent"
         changeColorOnScroll={{

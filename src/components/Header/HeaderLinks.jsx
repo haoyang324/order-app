@@ -64,7 +64,7 @@ export default function HeaderLinks(props) {
   };
   var onClickSections = {};
 
-  const { dropdownHoverColor, numOfType } = props;
+  const { dropdownHoverColor, badgeNumber } = props;
   const classes = useStyles();
   return (
     <List className={classes.list + " " + classes.mlAuto}>
@@ -74,7 +74,7 @@ export default function HeaderLinks(props) {
           className={classes.navLink}
           color="transparent"
           target="_blank"
-          >
+        >
           Admin
         </Button>
       </ListItem>
@@ -108,17 +108,17 @@ export default function HeaderLinks(props) {
         </Button>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Badge badgeContent={numOfType} color="secondary">
-          <Button
-            href="/shopping-cart"
-            color={window.innerWidth < 960 ? "info" : "white"}
-            target="_blank"
-            className={classes.navButton}
-            round
-          >
+        <Button
+          href="/shopping-cart"
+          color={window.innerWidth < 960 ? "info" : "white"}
+          target="_blank"
+          className={classes.navButton}
+          round
+        >
+          <Badge badgeContent={badgeNumber} variant="dot" color="secondary">
             <ShoppingCart className={classes.icons} /> Cart
-          </Button>
-        </Badge>
+          </Badge>
+        </Button>
       </ListItem>
     </List>
   );

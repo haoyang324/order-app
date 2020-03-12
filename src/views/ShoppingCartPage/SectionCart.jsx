@@ -18,7 +18,7 @@ const useStyles = makeStyles(styles);
 
 export default function SectionLatestOffers(props) {
   const classes = useStyles();
-  const { cart } = props;
+  const { cart, clearAll, checkOut } = props;
 
   return (
     <div className={classes.section}>
@@ -43,7 +43,9 @@ export default function SectionLatestOffers(props) {
                 <h4 className={classes.cardTitle}>{product.title}</h4>
                 <div>
                   <span style={{ float: "left" }}>Qty: {product.quantity}</span>
-                  <span style={{ float: "right" }}>${product.price}</span>
+                  <span style={{ float: "right", marginRight: 20 }}>
+                    ${product.price}
+                  </span>
                 </div>
               </CardBody>
             </Grid>
@@ -52,16 +54,42 @@ export default function SectionLatestOffers(props) {
       ) : (
         <h4> Your cart empty</h4>
       )}
-      <div style={{ float: "left" }}>
-        <Button type="button" round>
-          <ClearIcon className={classes.icons} /> Clear All
-        </Button>
-      </div>
-      <Button type="button" color="warning" round style={{ float: "right" }}>
-        <DoneAllIcon className={classes.icons} /> Check Out
-      </Button>
+      {cart.length ? (
+        <div>
+          <div style={{ float: "left" }}>
+            <Button type="button" round onClick={() => clearAll()}>
+              <ClearIcon className={classes.icons} /> Clear All
+            </Button>
+          </div>
+          <Button
+            type="button"
+            color="warning"
+            round
+            onClick={() => checkOut()}
+            style={{ float: "right" }}
+          >
+            <DoneAllIcon className={classes.icons} /> Check Out
+          </Button>
+        </div>
+      ) : (
+        <div>
+          <Button
+            type="button"
+            color="info"
+            round
+            onClick={() => (window.location = "/")}
+            style={{ float: "right" }}
+          >
+            <DoneAllIcon className={classes.icons} /> Get Something!
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
 
-SectionLatestOffers.propTypes = { cart: PropTypes.array };
+SectionLatestOffers.propTypes = {
+  cart: PropTypes.array,
+  clearAll: PropTypes.func,
+  checkOut: PropTypes.func
+};

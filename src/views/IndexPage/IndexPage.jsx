@@ -32,6 +32,7 @@ export default function EcommercePage() {
         _id: product._id,
         title: product.title,
         imgURL: product.imgURL,
+        price: product.pricing.$numberDecimal,
         quantity: 1
       });
     }

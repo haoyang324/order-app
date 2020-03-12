@@ -19,17 +19,29 @@ const useStyles = makeStyles(shoppingCartStyle);
 export default function ShoppingCartPage() {
   const [cart, setCart] = React.useState([]);
 
+  const getProductsFromLocalStorage = () => {
+    const productsInLocalStorage = JSON.parse(
+      localStorage.getItem("shoppingCartProducts")
+    );
+    if (productsInLocalStorage) {
+      setCart(productsInLocalStorage);
+    }
+  };
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-    setCart(localStorage.getItem("shoppingCart").split(","));
-  }, []);
+    getProductsFromLocalStorage();
+  }, []); //Probably not safe
+
   const classes = useStyles();
   return (
     <div>
       <Header
         brand="Brand Name"
-        links={<HeaderLinks dropdownHoverColor="info" cart={cart} />}
+        links={
+          <HeaderLinks dropdownHoverColor="info" numOfProducts={cart.length} />
+        }
         fixed
         color="transparent"
         changeColorOnScroll={{
@@ -61,7 +73,7 @@ export default function ShoppingCartPage() {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <SectionCart />
+          <SectionCart cart={cart} />
         </div>
       </div>
     </div>

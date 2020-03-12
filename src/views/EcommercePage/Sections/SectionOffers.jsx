@@ -15,6 +15,8 @@ import Button from "components/CustomButtons/Button.js";
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui icons
+// import Remove from "@material-ui/icons/Remove";
+// import Add from "@material-ui/icons/Add";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceSections/latestOffersStyle.js";
@@ -23,8 +25,39 @@ const useStyles = makeStyles(styles);
 
 export default function SectionLatestOffers(props) {
   const classes = useStyles();
-  const { products } = props;
-
+  const { products, addToCart } = props;
+  // const [state, setState] = React.useState({});
+  // const init = () => {
+  //   products.forEach(element => {
+  //     const key = "id_" + element._id;
+  //     let tempArr = {};
+  //     tempArr[key] = 0;
+  //     setState(prevState => ({
+  //       ...prevState,
+  //       ...tempArr
+  //     }));
+  //   });
+  // };
+  // const handleRemove = product => {
+  //   const key = "id_" + product._id;
+  //   if (state[key] !== 0) {
+  //     let tempState = state;
+  //     tempState[key] = state[key] - 1;
+  //     setState(tempState);
+  //   }
+  //   console.log(state);
+  // };
+  // const handleAdd = product => {
+  //   const key = "id_" + product._id;
+  //   let tempState = state;
+  //   tempState[key] = state[key] + 1;
+  //   tempState["data"] = state["data"] + 1;
+  //   setState(tempState);
+  //   console.log(state);
+  // };
+  // React.useEffect(() => {
+  //   init();
+  // }, [products]);
   return (
     <div className={classes.section}>
       <div className={classes.container}>
@@ -56,11 +89,29 @@ export default function SectionLatestOffers(props) {
                     <span>${product.pricing.$numberDecimal}</span>
                   </div>
                   <div className={classNames(classes.stats, classes.mlAuto)}>
+                    {/* <Button
+                      onClick={() => handleRemove(product)}
+                      justIcon
+                      simple
+                      color="rose"  
+                    >
+                      <Remove />
+                    </Button>
+                    <span>{state.id_5e64612051f6253f9a1032ee}</span>
+                    <Button
+                      onClick={() => handleAdd(product)}
+                      justIcon
+                      simple
+                      color="rose"
+                    >
+                      <Add />
+                    </Button> */}
                     <Tooltip
                       id="tooltip-top"
                       title="Add to cart"
                       placement="top"
                       classes={{ tooltip: classes.tooltip }}
+                      onClick={() => addToCart(product)}
                     >
                       <Button justIcon simple color="rose">
                         <ShoppingCartIcon />
@@ -78,5 +129,6 @@ export default function SectionLatestOffers(props) {
 }
 
 SectionLatestOffers.propTypes = {
-  products: PropTypes.any
+  products: PropTypes.any,
+  addToCart: PropTypes.func
 };

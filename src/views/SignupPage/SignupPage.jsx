@@ -96,7 +96,7 @@ export default function SignUpPage({ ...rest }) {
       >
         <div className={classes.container}>
           <GridContainer justify="center">
-            <GridItem xs={12} sm={10} md={10}>
+            <GridItem xs={11} sm={11} md={10}>
               <Card className={classes.cardSignup}>
                 <h2 className={classes.cardTitle}>Register</h2>
                 <CardBody>

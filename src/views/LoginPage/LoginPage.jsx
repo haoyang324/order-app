@@ -46,8 +46,10 @@ export default function LoginPage() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        window.location = "/";
         localStorage.setItem("jwt", data.token);
+        console.log("Login res: ");
+        console.log(data);
       })
       .catch(err => console.log(err));
   };
@@ -157,7 +159,7 @@ export default function LoginPage() {
                     </Button>
                   </div>
                 </form>
-                <Button href="/signup-page" simple color="primary" size="lg">
+                <Button href="/signup" simple color="primary" size="lg">
                   Signup
                 </Button>
               </Card>

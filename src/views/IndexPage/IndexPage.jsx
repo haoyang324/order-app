@@ -21,19 +21,18 @@ export default function EcommercePage() {
   const [cart, setCart] = React.useState([]);
   const [numOfType, setNumOfType] = React.useState(0);
 
-  const addToCart = product => {
+  const addToCart = (product, qty) => {
     let tempCart = cart;
     const productInCart = tempCart.find(element => element._id === product._id);
     if (productInCart) {
-      productInCart["name"] = "testname";
-      productInCart["quantity"] += 1;
+      productInCart["quantity"] += qty;
     } else {
       tempCart.push({
         _id: product._id,
         title: product.title,
         imgURL: product.imgURL,
         price: product.pricing.$numberDecimal,
-        quantity: 1
+        quantity: qty
       });
     }
     setCart(tempCart);
@@ -79,7 +78,7 @@ export default function EcommercePage() {
       console.log("JWT not found");
     }
   };
-  const getProductsFromLocalStorage = () => {
+  const getCartFromLocalStorage = () => {
     const productsInLocalStorage = JSON.parse(
       localStorage.getItem("shoppingCartProducts")
     );
@@ -94,7 +93,7 @@ export default function EcommercePage() {
     document.body.scrollTop = 0;
     fetchProducts();
     fetchUserStatus();
-    getProductsFromLocalStorage();
+    getCartFromLocalStorage();
   }, []); //Probably not a good approach.
 
   const classes = useStyles();

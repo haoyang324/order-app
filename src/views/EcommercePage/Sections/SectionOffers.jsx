@@ -15,8 +15,8 @@ import Button from "components/CustomButtons/Button.js";
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui icons
-// import Remove from "@material-ui/icons/Remove";
-// import Add from "@material-ui/icons/Add";
+import Add from "@material-ui/icons/Add";
+import Remove from "@material-ui/icons/Remove";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceSections/latestOffersStyle.js";
@@ -26,38 +26,40 @@ const useStyles = makeStyles(styles);
 export default function SectionLatestOffers(props) {
   const classes = useStyles();
   const { products, addToCart } = props;
-  // const [state, setState] = React.useState({});
-  // const init = () => {
-  //   products.forEach(element => {
-  //     const key = "id_" + element._id;
-  //     let tempArr = {};
-  //     tempArr[key] = 0;
-  //     setState(prevState => ({
-  //       ...prevState,
-  //       ...tempArr
-  //     }));
-  //   });
-  // };
-  // const handleRemove = product => {
-  //   const key = "id_" + product._id;
-  //   if (state[key] !== 0) {
-  //     let tempState = state;
-  //     tempState[key] = state[key] - 1;
-  //     setState(tempState);
-  //   }
-  //   console.log(state);
-  // };
-  // const handleAdd = product => {
-  //   const key = "id_" + product._id;
-  //   let tempState = state;
-  //   tempState[key] = state[key] + 1;
-  //   tempState["data"] = state["data"] + 1;
-  //   setState(tempState);
-  //   console.log(state);
-  // };
-  // React.useEffect(() => {
-  //   init();
-  // }, [products]);
+  const [qty, setQty] = React.useState([]);
+
+  const getQty = product => {
+    const productToAdd = qty.find(element => element._id === product._id);
+    return productToAdd ? productToAdd.quantity : 1;
+  };
+
+  const handleRemove = product => {
+    let tempQty = [];
+    Object.assign(tempQty, qty);
+    const productToAdd = tempQty.find(element => element._id === product._id);
+    console.log(productToAdd);
+
+    if (productToAdd && productToAdd["quantity"] > 1) {
+      productToAdd["quantity"] -= 1;
+    }
+    setQty(tempQty);
+  };
+
+  const handleAdd = product => {
+    let tempQty = [];
+    Object.assign(tempQty, qty);
+    const productToAdd = tempQty.find(element => element._id === product._id);
+    if (productToAdd) {
+      productToAdd["quantity"] += 1;
+    } else {
+      tempQty.push({
+        _id: product._id,
+        quantity: 2
+      });
+    }
+    setQty(tempQty);
+  };
+
   return (
     <div className={classes.section}>
       <div className={classes.container}>
@@ -89,15 +91,15 @@ export default function SectionLatestOffers(props) {
                     <span>${product.pricing.$numberDecimal}</span>
                   </div>
                   <div className={classNames(classes.stats, classes.mlAuto)}>
-                    {/* <Button
+                    <Button
                       onClick={() => handleRemove(product)}
                       justIcon
                       simple
-                      color="rose"  
+                      color="rose"
                     >
                       <Remove />
                     </Button>
-                    <span>{state.id_5e64612051f6253f9a1032ee}</span>
+                    <span>{getQty(product)}</span>
                     <Button
                       onClick={() => handleAdd(product)}
                       justIcon
@@ -105,13 +107,13 @@ export default function SectionLatestOffers(props) {
                       color="rose"
                     >
                       <Add />
-                    </Button> */}
+                    </Button>
                     <Tooltip
                       id="tooltip-top"
                       title="Add to cart"
                       placement="top"
                       classes={{ tooltip: classes.tooltip }}
-                      onClick={() => addToCart(product)}
+                      onClick={() => addToCart(product, getQty(product))}
                     >
                       <Button justIcon simple color="rose">
                         <ShoppingCartIcon />

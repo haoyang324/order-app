@@ -105,21 +105,21 @@ export default function SignUpPage({ ...rest }) {
                       <InfoArea
                         className={classes.infoArea}
                         title="Marketing"
-                        description="We've created the marketing campaign of the website. It was a very interesting collaboration."
+                        description=""
                         icon={Timeline}
                         iconColor="rose"
                       />
                       <InfoArea
                         className={classes.infoArea}
                         title="Fully Coded in HTML5"
-                        description="We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub."
+                        description=""
                         icon={Code}
                         iconColor="primary"
                       />
                       <InfoArea
                         className={classes.infoArea}
                         title="Built Audience"
-                        description="There is also a Fully Customizable CMS Admin Dashboard for this product."
+                        description=""
                         icon={Group}
                         iconColor="info"
                       />
@@ -240,62 +240,6 @@ export default function SignUpPage({ ...rest }) {
             </GridItem>
           </GridContainer>
         </div>
-        <Footer
-          content={
-            <div>
-              <div className={classes.left}>
-                <List className={classes.list}>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href="https://www.creative-tim.com/?ref=mkpr-signup"
-                      target="_blank"
-                      className={classes.block}
-                    >
-                      Creative Tim
-                    </a>
-                  </ListItem>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href="https://www.creative-tim.com/presentation?ref=mkpr-signup"
-                      target="_blank"
-                      className={classes.block}
-                    >
-                      About us
-                    </a>
-                  </ListItem>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href="//blog.creative-tim.com/"
-                      className={classes.block}
-                    >
-                      Blog
-                    </a>
-                  </ListItem>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href="https://www.creative-tim.com/license?ref=mkpr-signup"
-                      target="_blank"
-                      className={classes.block}
-                    >
-                      Licenses
-                    </a>
-                  </ListItem>
-                </List>
-              </div>
-              <div className={classes.right}>
-                &copy; {1900 + new Date().getYear()} , made with{" "}
-                <Favorite className={classes.icon} /> by{" "}
-                <a
-                  href="https://www.creative-tim.com?ref=mkpr-signup"
-                  target="_blank"
-                >
-                  Creative Tim
-                </a>{" "}
-                for a better web.
-              </div>
-            </div>
-          }
-        />
       </div>
     </div>
   );

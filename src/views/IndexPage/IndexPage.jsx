@@ -2,7 +2,7 @@ import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // core components
-import Header from "components/Header/Header.js";
+import Header from "components/Header/Header.jsx";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Parallax from "components/Parallax/Parallax.js";
@@ -23,7 +23,7 @@ export default function EcommercePage() {
 
   const addToCart = product => {
     let tempCart = cart;
-    const productInCart = tempCart.find(element => element._id == product._id);
+    const productInCart = tempCart.find(element => element._id === product._id);
     if (productInCart) {
       productInCart["name"] = "testname";
       productInCart["quantity"] += 1;
@@ -50,6 +50,35 @@ export default function EcommercePage() {
       .then(data => setProducts(data))
       .catch(err => console.log(err));
 
+  const fetchUserStatus = () => {
+    const jwt = localStorage.getItem("jwt");
+    if (localStorage.getItem("jwt")) {
+      console.log("Found JWT");
+      console.log(jwt);
+      let statusOK = false;
+      fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt
+        }
+      })
+        .then(res => {
+          res.status === 200 && (statusOK = true);
+          return res.json();
+        })
+        .then(data => {
+          statusOK &&
+            localStorage.setItem("userProfile", JSON.stringify(data)) &&
+            console.log(data);
+          console.log("Fetch user status res:");
+          console.log(data);
+        })
+        .catch(err => console.log(err));
+    } else {
+      console.log("JWT not found");
+    }
+  };
   const getProductsFromLocalStorage = () => {
     const productsInLocalStorage = JSON.parse(
       localStorage.getItem("shoppingCartProducts")
@@ -64,6 +93,7 @@ export default function EcommercePage() {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     fetchProducts();
+    fetchUserStatus();
     getProductsFromLocalStorage();
   }, []); //Probably not a good approach.
 
@@ -72,7 +102,10 @@ export default function EcommercePage() {
     <div>
       <Header
         brand="Brand Name"
-        links={<HeaderLinks dropdownHoverColor="info" numOfType={numOfType} />}
+        links={
+          <HeaderLinks dropdownHoverColor="info" badgeNumber={numOfType} />
+        }
+        badgeNumber={numOfType}
         fixed
         color="transparent"
         changeColorOnScroll={{

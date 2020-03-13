@@ -33,6 +33,22 @@ export default function AdminNav(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const logout = () => {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      }
+    })
+      .then(res => res.json())
+      .then(() => {
+        window.location = "/";
+        localStorage.removeItem("shoppingCartProducts");
+      })
+      .catch(err => console.log(err));
+  };
+
   const { title } = props;
   const classes = useStyles();
 
@@ -40,7 +56,7 @@ export default function AdminNav(props) {
     <div>
       <div className={classes.toolbar} />
       <List>
-        <ListItem button onClick={() => (window.location.href = "/")}>
+        <ListItem button onClick={() => (window.location.href = "/  ")}>
           <ListItemIcon>
             <ArrowBackIcon />
           </ListItemIcon>
@@ -75,7 +91,7 @@ export default function AdminNav(props) {
       </List>
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button onClick={() => logout()}>
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>

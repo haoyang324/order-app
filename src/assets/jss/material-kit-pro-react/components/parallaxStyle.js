@@ -178,8 +178,8 @@ const parallaxStyle = {
     }
   },
   small: {
-    height: "65vh",
-    minHeight: "65vh",
+    height: "55vh",
+    minHeight: "55vh",
     maxHeight: "650px"
   }
 };

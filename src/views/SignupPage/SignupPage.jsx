@@ -82,7 +82,7 @@ export default function SignUpPage({ ...rest }) {
         fixed
         color="transparent"
         changeColorOnScroll={{
-          height: 300,
+          height: 100,
           color: "primary"
         }}
       />

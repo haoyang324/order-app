@@ -67,7 +67,7 @@ export default function HeaderLinks(props) {
           About us
         </Button>
       </ListItem>
-      {!localStorage.getItem("jwt") ? (
+      {!localStorage.getItem("userProfile") ? (
         <ListItem className={classes.listItem}>
           <Button href="/login" className={classes.navLink} color="transparent">
             Login

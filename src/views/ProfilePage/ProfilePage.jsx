@@ -85,60 +85,10 @@ export default function ProfilePage({ ...rest }) {
                 </div>
                 <div className={classes.name}>
                   <h3 className={classes.title}>Christian Louboutin</h3>
-                  <h6>DESIGNER</h6>
-                  <Button
-                    justIcon
-                    simple
-                    color="dribbble"
-                    className={classes.margin5}
-                  >
-                    <i className={classes.socials + " fab fa-dribbble"} />
-                  </Button>
-                  <Button
-                    justIcon
-                    simple
-                    color="twitter"
-                    className={classes.margin5}
-                  >
-                    <i className={classes.socials + " fab fa-twitter"} />
-                  </Button>
-                  <Button
-                    justIcon
-                    simple
-                    color="pinterest"
-                    className={classes.margin5}
-                  >
-                    <i className={classes.socials + " fab fa-pinterest"} />
-                  </Button>
                 </div>
-              </div>
-              <div className={classes.follow}>
-                <Tooltip
-                  id="tooltip-top"
-                  title="Follow this user"
-                  placement="top"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button
-                    justIcon
-                    round
-                    color="primary"
-                    className={classes.followButton}
-                  >
-                    <Add className={classes.followIcon} />
-                  </Button>
-                </Tooltip>
               </div>
             </GridItem>
           </GridContainer>
-          <div className={classNames(classes.description, classes.textCenter)}>
-            <p>
-              An artist of considerable range, Chet Faker — the name taken by
-              Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs
-              and records all of his own music, giving it a warm, intimate feel
-              with a solid groove structure.{" "}
-            </p>
-          </div>
           <div className={classes.profileTabs}>
             <NavPills
               alignCenter

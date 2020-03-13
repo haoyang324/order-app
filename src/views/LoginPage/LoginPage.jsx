@@ -55,8 +55,6 @@ export default function LoginPage() {
   };
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
   });
   const classes = useStyles();
   return (
@@ -64,7 +62,7 @@ export default function LoginPage() {
       <Header
         brand="Brand Name"
         links={<HeaderLinks dropdownHoverColor="info" />}
-        fixed
+        absolute
         color="transparent"
       />
       <div

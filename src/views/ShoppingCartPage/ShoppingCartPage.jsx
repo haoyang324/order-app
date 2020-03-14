@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
-import Header from "components/Header/Header.js";
+import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import SectionCart from "views/ShoppingCartPage/SectionCart.jsx";
 import Parallax from "components/Parallax/Parallax.js";
@@ -43,9 +43,7 @@ export default function ShoppingCartPage() {
     <div>
       <Header
         brand="Brand Name"
-        links={
-          <HeaderLinks dropdownHoverColor="info" numOfProducts={cart.length} />
-        }
+        links={<HeaderLinks dropdownHoverColor="info" />}
         fixed
         color="transparent"
         changeColorOnScroll={{

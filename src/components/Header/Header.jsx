@@ -24,6 +24,23 @@ const useStyles = makeStyles(styles);
 export default function Header(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const classes = useStyles();
+  const [badge, setBadge] = React.useState(0);
+
+  const getCart = () => {
+    const cartProducts = JSON.parse(
+      localStorage.getItem("shoppingCartProducts")
+    );
+    if (cartProducts) {
+      setBadge(cartProducts.length);
+    } else {
+      setBadge(0);
+    }
+  };
+
+  React.useEffect(() => {
+    getCart();
+  });
+
   React.useEffect(() => {
     if (props.changeColorOnScroll) {
       window.addEventListener("scroll", headerColorChange);
@@ -34,6 +51,7 @@ export default function Header(props) {
       }
     };
   });
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -57,7 +75,7 @@ export default function Header(props) {
         .classList.remove(classes[changeColorOnScroll.color]);
     }
   };
-  const { color, links, brand, fixed, absolute, badgeNumber } = props;
+  const { color, links, brand, fixed, absolute } = props;
   const appBarClasses = classNames({
     [classes.appBar]: true,
     [classes[color]]: color,
@@ -79,7 +97,7 @@ export default function Header(props) {
             aria-label="open drawer"
             onClick={handleDrawerToggle}
           >
-            <Badge badgeContent={badgeNumber} variant="dot" color="secondary">
+            <Badge badgeContent={badge} variant="dot" color="secondary">
               <Menu />
             </Badge>
           </IconButton>

@@ -24,8 +24,25 @@ import styles from "assets/jss/material-kit-pro-react/components/headerLinksStyl
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
-  const { dropdownHoverColor, badgeNumber } = props;
+  const { dropdownHoverColor } = props;
   const classes = useStyles();
+  const [badge, setBadge] = React.useState(0);
+
+  const getCart = () => {
+    const cartProducts = JSON.parse(
+      localStorage.getItem("shoppingCartProducts")
+    );
+    if (cartProducts) {
+      setBadge(cartProducts.length);
+    } else {
+      setBadge(0);
+    }
+  };
+
+  React.useEffect(() => {
+    getCart();
+  });
+
   const signOut = () => {
     fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me/logout", {
       method: "POST",
@@ -129,7 +146,7 @@ export default function HeaderLinks(props) {
           className={classes.navButton}
           round
         >
-          <Badge badgeContent={badgeNumber} variant="dot" color="secondary">
+          <Badge badgeContent={badge} variant="dot" color="secondary">
             <ShoppingCart className={classes.icons} /> Cart
           </Badge>
         </Button>
@@ -151,6 +168,5 @@ HeaderLinks.propTypes = {
     "warning",
     "danger",
     "rose"
-  ]),
-  badgeNumber: PropTypes.number
+  ])
 };

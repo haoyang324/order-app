@@ -19,7 +19,7 @@ const useStyles = makeStyles(styles);
 export default function EcommercePage() {
   const [products, setProducts] = React.useState([]);
   const [cart, setCart] = React.useState([]);
-  const [numOfType, setNumOfType] = React.useState(0);
+  const [, setNum] = React.useState(0);
 
   const addToCart = (product, qty) => {
     let tempCart = cart;
@@ -36,7 +36,7 @@ export default function EcommercePage() {
       });
     }
     setCart(tempCart);
-    setNumOfType(cart.length);
+    setNum(1); // Why it works? Badge won't update without it
     localStorage.setItem("shoppingCartProducts", JSON.stringify(tempCart));
   };
 
@@ -84,7 +84,6 @@ export default function EcommercePage() {
     );
     if (productsInLocalStorage) {
       setCart(productsInLocalStorage);
-      setNumOfType(productsInLocalStorage.length);
     }
   };
 
@@ -101,10 +100,7 @@ export default function EcommercePage() {
     <div>
       <Header
         brand="Brand Name"
-        links={
-          <HeaderLinks dropdownHoverColor="info" badgeNumber={numOfType} />
-        }
-        badgeNumber={numOfType}
+        links={<HeaderLinks dropdownHoverColor="info" />}
         fixed
         color="transparent"
         changeColorOnScroll={{

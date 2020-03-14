@@ -125,7 +125,7 @@ export default function HeaderLinks(props) {
         <Button
           href="/shopping-cart"
           color={window.innerWidth < 960 ? "info" : "white"}
-          target="_blank"
+          // target="_blank"
           className={classes.navButton}
           round
         >

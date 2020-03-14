@@ -29,16 +29,14 @@ export default function SectionLatestOffers(props) {
   const [qty, setQty] = React.useState([]);
 
   const getQty = product => {
-    const productToAdd = qty.find(element => element._id === product._id);
+    const productToAdd = qty.find(e => e._id === product._id);
     return productToAdd ? productToAdd.quantity : 1;
   };
 
   const handleRemove = product => {
     let tempQty = [];
     Object.assign(tempQty, qty);
-    const productToAdd = tempQty.find(element => element._id === product._id);
-    console.log(productToAdd);
-
+    const productToAdd = tempQty.find(e => e._id === product._id);
     if (productToAdd && productToAdd["quantity"] > 1) {
       productToAdd["quantity"] -= 1;
     }
@@ -48,7 +46,7 @@ export default function SectionLatestOffers(props) {
   const handleAdd = product => {
     let tempQty = [];
     Object.assign(tempQty, qty);
-    const productToAdd = tempQty.find(element => element._id === product._id);
+    const productToAdd = tempQty.find(e => e._id === product._id);
     if (productToAdd) {
       productToAdd["quantity"] += 1;
     } else {

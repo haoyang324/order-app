@@ -19,25 +19,24 @@ const useStyles = makeStyles(styles);
 export default function EcommercePage() {
   const [products, setProducts] = React.useState([]);
   const [cart, setCart] = React.useState([]);
-  const [numOfType, setNumOfType] = React.useState(0);
+  const [, setNum] = React.useState(0);
 
-  const addToCart = product => {
+  const addToCart = (product, qty) => {
     let tempCart = cart;
     const productInCart = tempCart.find(element => element._id === product._id);
     if (productInCart) {
-      productInCart["name"] = "testname";
-      productInCart["quantity"] += 1;
+      productInCart["quantity"] += qty;
     } else {
       tempCart.push({
         _id: product._id,
         title: product.title,
         imgURL: product.imgURL,
         price: product.pricing.$numberDecimal,
-        quantity: 1
+        quantity: qty
       });
     }
     setCart(tempCart);
-    setNumOfType(cart.length);
+    setNum(1); // Why it works? Badge won't update without it
     localStorage.setItem("shoppingCartProducts", JSON.stringify(tempCart));
   };
 
@@ -52,7 +51,7 @@ export default function EcommercePage() {
 
   const fetchUserStatus = () => {
     const jwt = localStorage.getItem("jwt");
-    if (localStorage.getItem("jwt")) {
+    if (jwt) {
       console.log("Found JWT");
       console.log(jwt);
       let statusOK = false;
@@ -79,13 +78,12 @@ export default function EcommercePage() {
       console.log("JWT not found");
     }
   };
-  const getProductsFromLocalStorage = () => {
+  const getCartFromLocalStorage = () => {
     const productsInLocalStorage = JSON.parse(
       localStorage.getItem("shoppingCartProducts")
     );
     if (productsInLocalStorage) {
       setCart(productsInLocalStorage);
-      setNumOfType(productsInLocalStorage.length);
     }
   };
 
@@ -94,7 +92,7 @@ export default function EcommercePage() {
     document.body.scrollTop = 0;
     fetchProducts();
     fetchUserStatus();
-    getProductsFromLocalStorage();
+    getCartFromLocalStorage();
   }, []); //Probably not a good approach.
 
   const classes = useStyles();
@@ -102,10 +100,7 @@ export default function EcommercePage() {
     <div>
       <Header
         brand="Brand Name"
-        links={
-          <HeaderLinks dropdownHoverColor="info" badgeNumber={numOfType} />
-        }
-        badgeNumber={numOfType}
+        links={<HeaderLinks dropdownHoverColor="info" />}
         fixed
         color="transparent"
         changeColorOnScroll={{

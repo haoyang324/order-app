@@ -24,8 +24,25 @@ import styles from "assets/jss/material-kit-pro-react/components/headerLinksStyl
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
-  const { dropdownHoverColor, badgeNumber } = props;
+  const { dropdownHoverColor } = props;
   const classes = useStyles();
+  const [badge, setBadge] = React.useState(0);
+
+  const getCart = () => {
+    const cartProducts = JSON.parse(
+      localStorage.getItem("shoppingCartProducts")
+    );
+    if (cartProducts) {
+      setBadge(cartProducts.length);
+    } else {
+      setBadge(0);
+    }
+  };
+
+  React.useEffect(() => {
+    getCart();
+  });
+
   const signOut = () => {
     fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me/logout", {
       method: "POST",
@@ -67,13 +84,9 @@ export default function HeaderLinks(props) {
           About us
         </Button>
       </ListItem>
-      {!localStorage.getItem("jwt") ? (
+      {!localStorage.getItem("userProfile") ? (
         <ListItem className={classes.listItem}>
-          <Button
-            href="/login-page"
-            className={classes.navLink}
-            color="transparent"
-          >
+          <Button href="/login" className={classes.navLink} color="transparent">
             Login
           </Button>
         </ListItem>
@@ -129,11 +142,11 @@ export default function HeaderLinks(props) {
         <Button
           href="/shopping-cart"
           color={window.innerWidth < 960 ? "info" : "white"}
-          target="_blank"
+          // target="_blank"
           className={classes.navButton}
           round
         >
-          <Badge badgeContent={badgeNumber} variant="dot" color="secondary">
+          <Badge badgeContent={badge} variant="dot" color="secondary">
             <ShoppingCart className={classes.icons} /> Cart
           </Badge>
         </Button>
@@ -155,6 +168,5 @@ HeaderLinks.propTypes = {
     "warning",
     "danger",
     "rose"
-  ]),
-  badgeNumber: PropTypes.number
+  ])
 };

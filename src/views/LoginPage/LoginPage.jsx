@@ -46,15 +46,15 @@ export default function LoginPage() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        window.location = "/";
         localStorage.setItem("jwt", data.token);
+        console.log("Login res: ");
+        console.log(data);
       })
       .catch(err => console.log(err));
   };
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
   });
   const classes = useStyles();
   return (
@@ -62,7 +62,7 @@ export default function LoginPage() {
       <Header
         brand="Brand Name"
         links={<HeaderLinks dropdownHoverColor="info" />}
-        fixed
+        absolute
         color="transparent"
       />
       <div
@@ -157,7 +157,7 @@ export default function LoginPage() {
                     </Button>
                   </div>
                 </form>
-                <Button href="/signup-page" simple color="primary" size="lg">
+                <Button href="/signup" simple color="primary" size="lg">
                   Signup
                 </Button>
               </Card>

@@ -39,7 +39,7 @@ import LandingPage from "views/LandingPage/LandingPage.js";
 import LoginPage from "views/LoginPage/LoginPage.jsx";
 import PresentationPage from "views/PresentationPage/PresentationPage.js";
 import PricingPage from "views/PricingPage/PricingPage.js";
-import ProfilePage from "views/ProfilePage/ProfilePage.js";
+import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
 import ProductPage from "views/ProductPage/ProductPage.js";
 import SectionsPage from "views/SectionsPage/SectionsPage.js";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.jsx";
@@ -60,8 +60,9 @@ ReactDOM.render(
       <Route path="/admin/products/:id" component={AdminProductsEdit} />
       <Route path="/admin/products" component={AdminProductsPage} />
 
-      <Route path="/signup-page" component={SignupPage} />
-      <Route path="/login-page" component={LoginPage} />
+      <Route path="/signup" component={SignupPage} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/profile" component={ProfilePage} />
       <Route path="/shopping-cart" component={ShoppingCartPage} />
 
       <Route path="/about-us" component={AboutUsPage} />
@@ -72,7 +73,6 @@ ReactDOM.render(
       <Route path="/ecommerce-page" component={EcommercePage} />
       <Route path="/landing-page" component={LandingPage} />
       <Route path="/pricing" component={PricingPage} />
-      <Route path="/profile-page" component={ProfilePage} />
       <Route path="/product-page" component={ProductPage} />
       <Route path="/sections" component={SectionsPage} />
       <Route path="/error-page" component={ErrorPage} />

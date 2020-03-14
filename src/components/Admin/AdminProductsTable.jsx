@@ -12,7 +12,7 @@ export default function AdminOrdersTable() {
         // eslint-disable-next-line react/display-name
         render: rowData => (
           <img
-            alt={rowData.title}
+            alt={rowData.name}
             style={{ height: 36, borderRadius: "10%" }}
             src={rowData.imgURL}
           />
@@ -28,11 +28,11 @@ export default function AdminOrdersTable() {
       },
       {
         title: "Product Name",
-        field: "title"
+        field: "name"
       },
       {
         title: "Price",
-        field: "pricing.$numberDecimal",
+        field: "price.$numberDecimal",
         width: 50,
         cellStyle: {
           maxWidth: 80

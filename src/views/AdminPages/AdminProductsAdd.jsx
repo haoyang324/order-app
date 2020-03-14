@@ -86,9 +86,9 @@ export default function AdminProductsAdd() {
     const image = new FormData();
     image.append("image", file);
     let productData = {
-      title: productName,
+      name: productName,
       description: description,
-      pricing: price,
+      price: price,
       imgURL: ""
     };
     fetch(process.env.REACT_APP_REST_API_LOCATION + "/images", {

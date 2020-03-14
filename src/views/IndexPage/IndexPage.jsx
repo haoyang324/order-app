@@ -29,9 +29,9 @@ export default function EcommercePage() {
     } else {
       tempCart.push({
         _id: product._id,
-        title: product.title,
+        name: product.name,
         imgURL: product.imgURL,
-        price: product.pricing.$numberDecimal,
+        price: product.price.$numberDecimal,
         quantity: qty
       });
     }

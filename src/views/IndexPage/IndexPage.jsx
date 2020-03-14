@@ -51,7 +51,7 @@ export default function EcommercePage() {
 
   const fetchUserStatus = () => {
     const jwt = localStorage.getItem("jwt");
-    if (localStorage.getItem("jwt")) {
+    if (jwt) {
       console.log("Found JWT");
       console.log(jwt);
       let statusOK = false;

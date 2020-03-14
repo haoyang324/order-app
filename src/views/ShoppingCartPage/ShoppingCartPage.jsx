@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
-import Header from "components/Header/Header.js";
+import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import SectionCart from "views/ShoppingCartPage/SectionCart.jsx";
 import Parallax from "components/Parallax/Parallax.js";
@@ -18,11 +18,6 @@ const useStyles = makeStyles(shoppingCartStyle);
 
 export default function ShoppingCartPage() {
   const [cart, setCart] = React.useState([]);
-
-  const clearAll = () => {
-    localStorage.setItem("shoppingCartProducts", JSON.stringify([]));
-    window.location = "/shopping-cart";
-  };
 
   const checkOut = () => {};
 
@@ -48,9 +43,7 @@ export default function ShoppingCartPage() {
     <div>
       <Header
         brand="Brand Name"
-        links={
-          <HeaderLinks dropdownHoverColor="info" numOfProducts={cart.length} />
-        }
+        links={<HeaderLinks dropdownHoverColor="info" />}
         fixed
         color="transparent"
         changeColorOnScroll={{
@@ -82,7 +75,7 @@ export default function ShoppingCartPage() {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <SectionCart cart={cart} clearAll={clearAll} checkOut={checkOut} />
+          <SectionCart cart={cart} setCart={setCart} checkOut={checkOut} />
         </div>
       </div>
     </div>

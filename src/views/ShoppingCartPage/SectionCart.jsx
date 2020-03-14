@@ -8,9 +8,13 @@ import Button from "components/CustomButtons/Button.js";
 import { makeStyles } from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui icons
+import Add from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
+import Close from "@material-ui/icons/Close";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
+import Remove from "@material-ui/icons/Remove";
 
 import styles from "assets/jss/material-kit-pro-react/views/sectionCartStyle.jsx";
 
@@ -18,7 +22,32 @@ const useStyles = makeStyles(styles);
 
 export default function SectionLatestOffers(props) {
   const classes = useStyles();
-  const { cart, clearAll, checkOut } = props;
+  const { cart, setCart, checkOut } = props;
+
+  const getQty = product => {
+    const productInCart = cart.find(e => e._id === product._id);
+    return productInCart ? productInCart.quantity : 1;
+  };
+
+  const handleQtyChange = (product, qty) => {
+    let tempCart = [];
+    Object.assign(tempCart, cart);
+    const index = tempCart.findIndex(e => e._id === product._id);
+    if (qty === 0) {
+      tempCart.splice(index, 1);
+    } else {
+      tempCart[index]["quantity"] += qty;
+      tempCart[index]["quantity"] < 1 && (tempCart[index]["quantity"] = 1);
+    }
+
+    localStorage.setItem("shoppingCartProducts", JSON.stringify(tempCart));
+    setCart(tempCart);
+  };
+
+  const handleClearAll = () => {
+    localStorage.setItem("shoppingCartProducts", JSON.stringify([]));
+    setCart([]);
+  };
 
   return (
     <div className={classes.section}>
@@ -42,10 +71,42 @@ export default function SectionLatestOffers(props) {
               <CardBody plain style={{ marginBottom: 80, marginTop: 0 }}>
                 <h4 className={classes.cardTitle}>{product.title}</h4>
                 <div>
-                  <span style={{ float: "left" }}>Qty: {product.quantity}</span>
-                  <span style={{ float: "right", marginRight: 20 }}>
-                    ${product.price}
-                  </span>
+                  <div style={{ float: "left" }}>
+                    <span>Qty: </span>
+                    <Button
+                      onClick={() => handleQtyChange(product, -1)}
+                      justIcon
+                      simple
+                      color="rose"
+                    >
+                      <Remove />
+                    </Button>
+                    <span>{getQty(product)}</span>
+                    <Button
+                      onClick={() => handleQtyChange(product, 1)}
+                      justIcon
+                      simple
+                      color="rose"
+                    >
+                      <Add />
+                    </Button>
+                  </div>
+                  <div style={{ float: "right", marginRight: 20 }}>
+                    <span>${product.price}</span>
+                    <Tooltip
+                      title="Remove item"
+                      placement="top"
+                      classes={{ tooltip: classes.tooltip }}
+                    >
+                      <Button
+                        link
+                        className={classes.actionButton}
+                        onClick={() => handleQtyChange(product, 0)}
+                      >
+                        <Close />
+                      </Button>
+                    </Tooltip>
+                  </div>
                 </div>
               </CardBody>
             </Grid>
@@ -57,7 +118,7 @@ export default function SectionLatestOffers(props) {
       {cart.length ? (
         <div>
           <div style={{ float: "left" }}>
-            <Button type="button" round onClick={() => clearAll()}>
+            <Button type="button" round onClick={() => handleClearAll()}>
               <ClearIcon className={classes.icons} /> Clear All
             </Button>
           </div>
@@ -90,6 +151,6 @@ export default function SectionLatestOffers(props) {
 
 SectionLatestOffers.propTypes = {
   cart: PropTypes.array,
-  clearAll: PropTypes.func,
+  setCart: PropTypes.func,
   checkOut: PropTypes.func
 };

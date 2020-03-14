@@ -53,11 +53,10 @@ export default function HeaderLinks(props) {
     })
       .then(res => res.json())
       .then(data => {
-        window.location = "/";
-        localStorage.removeItem("shoppingCartProducts");
-        localStorage.removeItem("jwt");
+        localStorage.clear();
         console.log("Sign out res:");
         console.log(data);
+        window.location = "/";
       })
       .catch(err => console.log(err));
   };
@@ -84,13 +83,7 @@ export default function HeaderLinks(props) {
           About us
         </Button>
       </ListItem>
-      {!localStorage.getItem("userProfile") ? (
-        <ListItem className={classes.listItem}>
-          <Button href="/login" className={classes.navLink} color="transparent">
-            Login
-          </Button>
-        </ListItem>
-      ) : (
+      {localStorage.getItem("jwt") ? (
         <ListItem className={classes.listItem}>
           <CustomDropdown
             noLiPadding
@@ -136,6 +129,12 @@ export default function HeaderLinks(props) {
               </Link>
             ]}
           />
+        </ListItem>
+      ) : (
+        <ListItem className={classes.listItem}>
+          <Button href="/login" className={classes.navLink} color="transparent">
+            Login
+          </Button>
         </ListItem>
       )}
       <ListItem className={classes.listItem}>

@@ -1,19 +1,13 @@
-/*eslint-disable*/
 import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
-import Favorite from "@material-ui/icons/Favorite";
-import Face from "@material-ui/icons/Face";
 // core components
 import Header from "components/Header/Header.js";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
-import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
@@ -33,7 +27,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
 
   const handleSubmit = e => {
-    event.preventDefault();
+    e.preventDefault();
     let data = {
       email: email,
       password: password
@@ -46,16 +40,14 @@ export default function LoginPage() {
     })
       .then(res => res.json())
       .then(data => {
-        window.location = "/";
         localStorage.setItem("jwt", data.token);
         console.log("Login res: ");
         console.log(data);
+        window.location = "/";
       })
       .catch(err => console.log(err));
   };
 
-  React.useEffect(() => {
-  });
   const classes = useStyles();
   return (
     <div>

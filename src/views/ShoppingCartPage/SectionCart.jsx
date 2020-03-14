@@ -69,7 +69,7 @@ export default function SectionLatestOffers(props) {
             </Grid>
             <Grid item xs={8} sm={8} lg={8}>
               <CardBody plain style={{ marginBottom: 80, marginTop: 0 }}>
-                <h4 className={classes.cardTitle}>{product.title}</h4>
+                <h4 className={classes.cardTitle}>{product.name}</h4>
                 <div>
                   <div style={{ float: "left" }}>
                     <span>Qty: </span>

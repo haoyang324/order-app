@@ -79,14 +79,14 @@ export default function SectionLatestOffers(props) {
                   />
                 </CardHeader>
                 <CardBody className={classes.textCenter} plain>
-                  <h4 className={classes.cardTitle}>{product.title}</h4>
+                  <h4 className={classes.cardTitle}>{product.name}</h4>
                   <p className={classes.cardDescription}>
                     {product.description}
                   </p>
                 </CardBody>
                 <CardFooter plain>
                   <div className={classes.priceContainer}>
-                    <span>${product.pricing.$numberDecimal}</span>
+                    <span>${product.price.$numberDecimal}</span>
                   </div>
                   <div className={classNames(classes.stats, classes.mlAuto)}>
                     <Button

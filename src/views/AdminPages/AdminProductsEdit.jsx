@@ -111,9 +111,9 @@ export default function AdminProductsEdit(props) {
     }
 
     let productData = {
-      title: productName,
+      name: productName,
       description: description,
-      pricing: price,
+      price: price,
       imgURL: imagePreviewUrl
     };
     // Check if user uploaded a new image
@@ -177,10 +177,10 @@ export default function AdminProductsEdit(props) {
     })
       .then(res => res.json())
       .then(data => {
-        const { title, description, pricing, imgURL } = data;
-        setProductName(title);
+        const { name, description, price, imgURL } = data;
+        setProductName(name);
         setDescription(description);
-        setPrice(pricing.$numberDecimal);
+        setPrice(price.$numberDecimal);
         setImagePreviewUrl(imgURL);
       })
       .catch(err => console.log(err));

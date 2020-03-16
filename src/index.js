@@ -21,12 +21,19 @@ import { Router, Route, Switch } from "react-router";
 
 import "assets/scss/material-kit-pro-react.scss?v=1.8.0";
 
+import IndexPage from "views/IndexPage/IndexPage.jsx";
 // pages for admin
 import AdminHome from "views/AdminPages/AdminHome.jsx";
 import AdminOrdersPage from "views/AdminPages/AdminOrdersPage.jsx";
 import AdminProductsPage from "views/AdminPages/AdminProductsPage.jsx";
 import AdminProductsAdd from "views/AdminPages/AdminProductsAdd.jsx";
 import AdminProductsEdit from "views/AdminPages/AdminProductsEdit.jsx";
+// pages for users
+import SignupPage from "views/SignupPage/SignupPage.jsx";
+import LoginPage from "views/LoginPage/LoginPage.jsx";
+import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
+import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.jsx";
+import CheckoutPage from "views/CheckoutPage/CheckoutPage.jsx";
 
 // pages for this product
 import AboutUsPage from "views/AboutUsPage/AboutUsPage.js";
@@ -36,17 +43,11 @@ import ComponentsPage from "views/ComponentsPage/ComponentsPage.js";
 import ContactUsPage from "views/ContactUsPage/ContactUsPage.js";
 import EcommercePage from "views/EcommercePage/EcommercePage.js";
 import LandingPage from "views/LandingPage/LandingPage.js";
-import LoginPage from "views/LoginPage/LoginPage.jsx";
 import PresentationPage from "views/PresentationPage/PresentationPage.js";
 import PricingPage from "views/PricingPage/PricingPage.js";
-import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
 import ProductPage from "views/ProductPage/ProductPage.js";
 import SectionsPage from "views/SectionsPage/SectionsPage.js";
-import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.jsx";
-import SignupPage from "views/SignupPage/SignupPage.jsx";
 import ErrorPage from "views/ErrorPage/ErrorPage.js";
-
-import IndexPage from "views/IndexPage/IndexPage.jsx";
 
 var hist = createBrowserHistory();
 
@@ -64,6 +65,7 @@ ReactDOM.render(
       <Route path="/login" component={LoginPage} />
       <Route path="/profile" component={ProfilePage} />
       <Route path="/shopping-cart" component={ShoppingCartPage} />
+      <Route path="/Checkout" component={CheckoutPage} />
 
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/blog-post" component={BlogPostPage} />

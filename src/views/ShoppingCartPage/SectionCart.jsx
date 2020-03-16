@@ -22,7 +22,7 @@ const useStyles = makeStyles(styles);
 
 export default function SectionLatestOffers(props) {
   const classes = useStyles();
-  const { cart, setCart, checkOut } = props;
+  const { cart, setCart, checkout } = props;
 
   const getQty = product => {
     const productInCart = cart.find(e => e._id === product._id);
@@ -122,15 +122,16 @@ export default function SectionLatestOffers(props) {
               <ClearIcon className={classes.icons} /> Clear All
             </Button>
           </div>
-          <Button
-            type="button"
-            color="warning"
-            round
-            onClick={() => checkOut()}
-            style={{ float: "right" }}
-          >
-            <DoneAllIcon className={classes.icons} /> Check Out
-          </Button>
+          <div style={{ float: "right" }}>
+            <Button
+              type="button"
+              color="warning"
+              round
+              onClick={() => checkout()}
+            >
+              <DoneAllIcon className={classes.icons} /> Checkout
+            </Button>
+          </div>
         </div>
       ) : (
         <div>
@@ -152,5 +153,5 @@ export default function SectionLatestOffers(props) {
 SectionLatestOffers.propTypes = {
   cart: PropTypes.array,
   setCart: PropTypes.func,
-  checkOut: PropTypes.func
+  checkout: PropTypes.func
 };

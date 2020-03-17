@@ -35,51 +35,24 @@ import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.jsx";
 import CheckoutPage from "views/CheckoutPage/CheckoutPage.jsx";
 
-// pages for this product
-import AboutUsPage from "views/AboutUsPage/AboutUsPage.js";
-import BlogPostPage from "views/BlogPostPage/BlogPostPage.js";
-import BlogPostsPage from "views/BlogPostsPage/BlogPostsPage.js";
-import ComponentsPage from "views/ComponentsPage/ComponentsPage.js";
-import ContactUsPage from "views/ContactUsPage/ContactUsPage.js";
-import EcommercePage from "views/EcommercePage/EcommercePage.js";
-import LandingPage from "views/LandingPage/LandingPage.js";
-import PresentationPage from "views/PresentationPage/PresentationPage.js";
-import PricingPage from "views/PricingPage/PricingPage.js";
-import ProductPage from "views/ProductPage/ProductPage.js";
-import SectionsPage from "views/SectionsPage/SectionsPage.js";
-import ErrorPage from "views/ErrorPage/ErrorPage.js";
-
 var hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
+      <Route path="/" exact component={IndexPage} />
+
       <Route path="/admin/home" component={AdminHome} />
       <Route path="/admin/orders" component={AdminOrdersPage} />
-
+      <Route path="/admin/products" exact component={AdminProductsPage} />
       <Route path="/admin/products/add" component={AdminProductsAdd} />
       <Route path="/admin/products/:id" component={AdminProductsEdit} />
-      <Route path="/admin/products" component={AdminProductsPage} />
 
       <Route path="/signup" component={SignupPage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/profile" component={ProfilePage} />
       <Route path="/shopping-cart" component={ShoppingCartPage} />
-      <Route path="/Checkout" component={CheckoutPage} />
-
-      <Route path="/about-us" component={AboutUsPage} />
-      <Route path="/blog-post" component={BlogPostPage} />
-      <Route path="/blog-posts" component={BlogPostsPage} />
-      <Route path="/components" component={ComponentsPage} />
-      <Route path="/contact-us" component={ContactUsPage} />
-      <Route path="/ecommerce-page" component={EcommercePage} />
-      <Route path="/landing-page" component={LandingPage} />
-      <Route path="/pricing" component={PricingPage} />
-      <Route path="/product-page" component={ProductPage} />
-      <Route path="/sections" component={SectionsPage} />
-      <Route path="/error-page" component={ErrorPage} />
-      <Route path="/presentation-page" component={PresentationPage} />
-      <Route path="/" component={IndexPage} />
+      <Route path="/checkout" component={CheckoutPage} />
     </Switch>
   </Router>,
   document.getElementById("root")

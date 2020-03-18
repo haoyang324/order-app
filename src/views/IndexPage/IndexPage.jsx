@@ -49,41 +49,6 @@ export default function EcommercePage() {
       .then(data => setProducts(data))
       .catch(err => console.log(err));
 
-  const updateUserStatus = () => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      console.log("Found JWT");
-      console.log(jwt);
-      let status = false;
-      fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + jwt
-        }
-      })
-        .then(res => {
-          status = res.status;
-          return res.json();
-        })
-        .then(data => {
-          if (status === 200) {
-            localStorage.setItem("userProfile", JSON.stringify(data));
-            console.log("Status 200. User profile:");
-            console.log(data);
-          } else {
-            localStorage.removeItem("jwt");
-            console.log("JWT invalid. JWT removed");
-            localStorage.removeItem("userProfile");
-          }
-        })
-        .catch(err => console.log(err));
-    } else {
-      console.log("JWT not found");
-      localStorage.removeItem("userProfile");
-    }
-  };
-
   const getCartFromLocalStorage = () => {
     const productsInLocalStorage = JSON.parse(
       localStorage.getItem("shoppingCartProducts")
@@ -97,7 +62,6 @@ export default function EcommercePage() {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     fetchProducts();
-    updateUserStatus();
     getCartFromLocalStorage();
   }, []); //Probably not a good approach.
 

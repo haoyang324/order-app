@@ -1,102 +1,120 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-export default function AddressForm() {
+
+export default function AddressForm(props) {
+  const { address, setAddress } = props;
+
+  const handleChange = event => {
+    event.persist();
+    setAddress(prevState => ({
+      ...prevState,
+      [event.target.name]: event.target.value
+    }));
+  };
+
   return (
     <React.Fragment>
-      <h2>Shipping address</h2>
-      <GridContainer spacing={3}>
-        <GridItem></GridItem>
-        <Grid item xs={12} sm={10}>
+      <h3> Shipping address</h3>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="firstName"
             name="firstName"
             label="First name"
+            value={address.firstName}
+            onChange={handleChange}
             fullWidth
             autoComplete="fname"
           />
         </Grid>
-        <Grid item xs={12} sm={10}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="lastName"
             name="lastName"
             label="Last name"
+            value={address.lastName}
+            onChange={handleChange}
             fullWidth
             autoComplete="lname"
           />
         </Grid>
-        <Grid item xs={12} sm={10}>
+        <Grid item xs={12}>
           <TextField
             required
-            id="address1"
-            name="address1"
-            label="Address line 1"
+            id="address"
+            name="address"
+            label="Address line"
+            value={address.address}
+            onChange={handleChange}
             fullWidth
             autoComplete="billing address-line1"
           />
         </Grid>
-        <Grid item xs={12} sm={10}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="billing address-line2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={10}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="city"
             name="city"
             label="City"
+            value={address.city}
+            onChange={handleChange}
             fullWidth
             autoComplete="billing address-level2"
           />
         </Grid>
-        <Grid item xs={12} sm={10}>
+        <Grid item xs={12} sm={6}>
           <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
+            id="province"
+            name="province"
+            label="Province"
+            value={address.province}
+            onChange={handleChange}
             fullWidth
           />
         </Grid>
-        <Grid item xs={12} sm={5}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="zip"
             name="zip"
-            label="Zip / Postal code"
+            label="Postal code"
+            value={address.zip}
+            onChange={handleChange}
             fullWidth
             autoComplete="billing postal-code"
           />
         </Grid>
-        <Grid item xs={12} sm={5}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="country"
             name="country"
             label="Country"
+            value={address.country}
+            onChange={handleChange}
             fullWidth
             autoComplete="billing country"
           />
         </Grid>
-        <Grid item xs={12} sm={10}>
+        <Grid item xs={12}>
           <FormControlLabel
             control={
               <Checkbox color="secondary" name="saveAddress" value="yes" />
             }
-            label="Use this address for payment details"
+            label="Save this address for further shopping"
           />
         </Grid>
-      </GridContainer>
+      </Grid>
     </React.Fragment>
   );
 }
+AddressForm.propTypes = {
+  address: PropTypes.object,
+  setAddress: PropTypes.func
+};

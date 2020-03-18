@@ -18,11 +18,13 @@ import Remove from "@material-ui/icons/Remove";
 
 import styles from "assets/jss/material-kit-pro-react/views/sectionCartStyle.jsx";
 
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles(styles);
 
-export default function SectionLatestOffers(props) {
+export default function SectionCart(props) {
   const classes = useStyles();
-  const { cart, setCart, checkout } = props;
+  const { cart, setCart } = props;
 
   const getQty = product => {
     const productInCart = cart.find(e => e._id === product._id);
@@ -123,14 +125,16 @@ export default function SectionLatestOffers(props) {
             </Button>
           </div>
           <div style={{ float: "right" }}>
-            <Button
-              type="button"
-              color="warning"
-              round
-              onClick={() => checkout()}
+            <Link
+              to={{
+                pathname: "/checkout",
+                state: cart
+              }}
             >
-              <DoneAllIcon className={classes.icons} /> Checkout
-            </Button>
+              <Button type="button" color="warning" round>
+                <DoneAllIcon className={classes.icons} /> Checkout
+              </Button>
+            </Link>
           </div>
         </div>
       ) : (
@@ -150,7 +154,7 @@ export default function SectionLatestOffers(props) {
   );
 }
 
-SectionLatestOffers.propTypes = {
+SectionCart.propTypes = {
   cart: PropTypes.array,
   setCart: PropTypes.func,
   checkout: PropTypes.func

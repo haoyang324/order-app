@@ -5,11 +5,12 @@ import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
+
+import Button from "components/CustomButtons/Button.js";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -50,39 +51,77 @@ const useStyles = makeStyles(theme => ({
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error("Unknown step");
-  }
-}
-
-export default function Checkout() {
+export default function Checkout({ ...params }) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(1);
+  const [address, setAddress] = React.useState({
+    firstName: "Haoyang",
+    lastName: "Wang",
+    address: "Parker Street",
+    city: "Burnaby",
+    province: "BC",
+    zip: "V5C3E3",
+    country: "Canada"
+  });
+  const [payment, setPayment] = React.useState({
+    cardName: "Haoyang Wang",
+    cardNumber: "xxxx-xxxx-xxxx-1234",
+    expDate: "04/2024",
+    cvv: "000"
+  });
+  const [cart, setCart] = React.useState([]);
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm address={address} setAddress={setAddress} />;
+      case 1:
+        return <PaymentForm payment={payment} setPayment={setPayment} />;
+      case 2:
+        return <Review address={address} payment={payment} cart={cart} />;
+      default:
+        throw new Error("Unknown step");
+    }
+  }
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+    if (activeStep === 2) {
+      placeOrder();
+    }
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
+  const placeOrder = () => {
+    const data = {
+      date: new Date(),
+      address: JSON.stringify(address)
+    };
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.log(err));
+  };
+
+  React.useEffect(() => {
+    setCart(params.location.state);
+  }, [params.location.state]);
+
   return (
     <React.Fragment>
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
+          <h2>Checkout</h2>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map(label => (
               <Step key={label}>
@@ -113,7 +152,7 @@ export default function Checkout() {
                   )}
                   <Button
                     variant="contained"
-                    color="primary"
+                    color="info"
                     onClick={handleNext}
                     className={classes.button}
                   >

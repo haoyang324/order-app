@@ -138,17 +138,17 @@ export default function HeaderLinks(props) {
         </ListItem>
       )}
       <ListItem className={classes.listItem}>
-        <Button
-          href="/shopping-cart"
-          color={window.innerWidth < 960 ? "info" : "white"}
-          // target="_blank"
-          className={classes.navButton}
-          round
-        >
-          <Badge badgeContent={badge} variant="dot" color="secondary">
-            <ShoppingCart className={classes.icons} /> Cart
-          </Badge>
-        </Button>
+        <Link to="/shopping-cart">
+          <Button
+            color={window.innerWidth < 960 ? "info" : "white"}
+            className={classes.navButton}
+            round
+          >
+            <Badge badgeContent={badge} variant="dot" color="secondary">
+              <ShoppingCart className={classes.icons} /> Cart
+            </Badge>
+          </Button>
+        </Link>
       </ListItem>
     </List>
   );

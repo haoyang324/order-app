@@ -29,9 +29,9 @@ export default function EcommercePage() {
     } else {
       tempCart.push({
         _id: product._id,
-        title: product.title,
+        name: product.name,
         imgURL: product.imgURL,
-        price: product.pricing.$numberDecimal,
+        price: product.price.$numberDecimal,
         quantity: qty
       });
     }
@@ -49,35 +49,6 @@ export default function EcommercePage() {
       .then(data => setProducts(data))
       .catch(err => console.log(err));
 
-  const fetchUserStatus = () => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      console.log("Found JWT");
-      console.log(jwt);
-      let statusOK = false;
-      fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + jwt
-        }
-      })
-        .then(res => {
-          res.status === 200 && (statusOK = true);
-          return res.json();
-        })
-        .then(data => {
-          statusOK &&
-            localStorage.setItem("userProfile", JSON.stringify(data)) &&
-            console.log(data);
-          console.log("Fetch user status res:");
-          console.log(data);
-        })
-        .catch(err => console.log(err));
-    } else {
-      console.log("JWT not found");
-    }
-  };
   const getCartFromLocalStorage = () => {
     const productsInLocalStorage = JSON.parse(
       localStorage.getItem("shoppingCartProducts")
@@ -91,7 +62,6 @@ export default function EcommercePage() {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     fetchProducts();
-    fetchUserStatus();
     getCartFromLocalStorage();
   }, []); //Probably not a good approach.
 

@@ -18,11 +18,13 @@ import Remove from "@material-ui/icons/Remove";
 
 import styles from "assets/jss/material-kit-pro-react/views/sectionCartStyle.jsx";
 
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles(styles);
 
-export default function SectionLatestOffers(props) {
+export default function SectionCart(props) {
   const classes = useStyles();
-  const { cart, setCart, checkOut } = props;
+  const { cart, setCart } = props;
 
   const getQty = product => {
     const productInCart = cart.find(e => e._id === product._id);
@@ -69,7 +71,7 @@ export default function SectionLatestOffers(props) {
             </Grid>
             <Grid item xs={8} sm={8} lg={8}>
               <CardBody plain style={{ marginBottom: 80, marginTop: 0 }}>
-                <h4 className={classes.cardTitle}>{product.title}</h4>
+                <h4 className={classes.cardTitle}>{product.name}</h4>
                 <div>
                   <div style={{ float: "left" }}>
                     <span>Qty: </span>
@@ -122,15 +124,18 @@ export default function SectionLatestOffers(props) {
               <ClearIcon className={classes.icons} /> Clear All
             </Button>
           </div>
-          <Button
-            type="button"
-            color="warning"
-            round
-            onClick={() => checkOut()}
-            style={{ float: "right" }}
-          >
-            <DoneAllIcon className={classes.icons} /> Check Out
-          </Button>
+          <div style={{ float: "right" }}>
+            <Link
+              to={{
+                pathname: "/checkout",
+                state: cart
+              }}
+            >
+              <Button type="button" color="warning" round>
+                <DoneAllIcon className={classes.icons} /> Checkout
+              </Button>
+            </Link>
+          </div>
         </div>
       ) : (
         <div>
@@ -149,8 +154,8 @@ export default function SectionLatestOffers(props) {
   );
 }
 
-SectionLatestOffers.propTypes = {
+SectionCart.propTypes = {
   cart: PropTypes.array,
   setCart: PropTypes.func,
-  checkOut: PropTypes.func
+  checkout: PropTypes.func
 };

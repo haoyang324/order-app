@@ -19,8 +19,6 @@ const useStyles = makeStyles(shoppingCartStyle);
 export default function ShoppingCartPage() {
   const [cart, setCart] = React.useState([]);
 
-  const checkOut = () => {};
-
   const getProductsFromLocalStorage = () => {
     const productsInLocalStorage = JSON.parse(
       localStorage.getItem("shoppingCartProducts")
@@ -28,8 +26,6 @@ export default function ShoppingCartPage() {
     if (productsInLocalStorage) {
       setCart(productsInLocalStorage);
     }
-
-    // setTest(productsInLocalStorage);
   };
 
   React.useEffect(() => {
@@ -75,7 +71,7 @@ export default function ShoppingCartPage() {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <SectionCart cart={cart} setCart={setCart} checkOut={checkOut} />
+          <SectionCart cart={cart} setCart={setCart} />
         </div>
       </div>
     </div>

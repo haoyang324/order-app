@@ -9,7 +9,7 @@ import GridItem from "components/Grid/GridItem.js";
 import Parallax from "components/Parallax/Parallax.js";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
-import SectionOffers from "views/EcommercePage/Sections/SectionOffers.jsx";
+import SectionOffers from "views/IndexPage/SectionOffers.jsx";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 

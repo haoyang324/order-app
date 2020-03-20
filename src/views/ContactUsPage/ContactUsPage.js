@@ -19,7 +19,7 @@ import PinDrop from "@material-ui/icons/PinDrop";
 import Phone from "@material-ui/icons/Phone";
 import BusinessCenter from "@material-ui/icons/BusinessCenter";
 // core components
-import Header from "components/Header/Header.js";
+import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";

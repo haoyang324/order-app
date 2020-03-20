@@ -120,11 +120,13 @@ export default function HeaderLinks(props) {
         </ListItem>
       ) : (
         <ListItem className={classes.listItem}>
-          <Link to="/login">
-            <Button className={classes.navLink} color="transparent">
-              Login
-            </Button>
-          </Link>
+          <Button
+            onClick={() => history.push("/login")}
+            className={classes.navButton}
+            color="transparent"
+          >
+            Login
+          </Button>
         </ListItem>
       )}
       <ListItem className={classes.listItem}>

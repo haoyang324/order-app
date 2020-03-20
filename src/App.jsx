@@ -1,6 +1,7 @@
 import React from "react";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router";
+import { MyProvider } from "Context.jsx";
 import IndexPage from "views/IndexPage/IndexPage.jsx";
 // pages for admin
 import AdminHome from "views/AdminPages/AdminHome.jsx";
@@ -14,8 +15,6 @@ import LoginPage from "views/LoginPage/LoginPage.jsx";
 import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.jsx";
 import CheckoutPage from "views/CheckoutPage/CheckoutPage.jsx";
-
-import { MyProvider } from "./Context.jsx";
 
 var hist = createBrowserHistory();
 

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { MyContext } from "Context.jsx";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -28,9 +30,11 @@ import image from "assets/img/bg7.jpg";
 const useStyles = makeStyles(signupPageStyle);
 
 export default function SignUpPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  let history = useHistory();
+  let context = React.useContext(MyContext);
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const [checked, setChecked] = React.useState([1]);
   const handleToggle = value => {
@@ -46,19 +50,33 @@ export default function SignUpPage() {
 
   const handleSubmit = e => {
     e.preventDefault();
+    let status = 0;
     let data = {
       name: name,
       email: email,
       password: password
     };
 
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/signup", {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
-      .then(data => console.log(data))
+      .then(res => {
+        status = res.status;
+        return res.json();
+      })
+      .then(data => {
+        console.log("Signup res: ");
+        console.log(data);
+        if (status === 201) {
+          localStorage.setItem("jwt", data.token);
+          context.updateUserStatus(data);
+          history.push("/");
+        } else {
+          console.log(data.error);
+        }
+      })
       .catch(err => console.log(err));
   };
 

@@ -1,6 +1,5 @@
 import React from "react";
-// nodejs library to set properties for components
-import PropTypes from "prop-types";
+import { MyContext } from "Context.jsx";
 // core components
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
@@ -22,9 +21,10 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
-export default function SectionCart(props) {
+export default function SectionCart() {
+  const context = React.useContext(MyContext);
+  const cart = context.state.cart;
   const classes = useStyles();
-  const { cart, setCart } = props;
 
   const getQty = product => {
     const productInCart = cart.find(e => e._id === product._id);
@@ -43,12 +43,12 @@ export default function SectionCart(props) {
     }
 
     localStorage.setItem("shoppingCartProducts", JSON.stringify(tempCart));
-    setCart(tempCart);
+    context.updateCart(tempCart);
   };
 
   const handleClearAll = () => {
     localStorage.setItem("shoppingCartProducts", JSON.stringify([]));
-    setCart([]);
+    context.updateCart([]);
   };
 
   return (
@@ -139,23 +139,13 @@ export default function SectionCart(props) {
         </div>
       ) : (
         <div>
-          <Button
-            type="button"
-            color="info"
-            round
-            onClick={() => (window.location = "/")}
-            style={{ float: "right" }}
-          >
-            <DoneAllIcon className={classes.icons} /> Get Something!
-          </Button>
+          <Link to="/">
+            <Button type="button" color="info" round style={{ float: "right" }}>
+              <DoneAllIcon className={classes.icons} /> Get Something!
+            </Button>
+          </Link>
         </div>
       )}
     </div>
   );
 }
-
-SectionCart.propTypes = {
-  cart: PropTypes.array,
-  setCart: PropTypes.func,
-  checkout: PropTypes.func
-};

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { MyContext } from "Context.jsx";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -21,13 +23,15 @@ import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageSty
 import image from "assets/img/bg7.jpg";
 
 const useStyles = makeStyles(loginPageStyle);
-
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  let history = useHistory();
+  let context = React.useContext(MyContext);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const handleSubmit = e => {
     e.preventDefault();
+    let status = 0;
     let data = {
       email: email,
       password: password
@@ -38,12 +42,20 @@ export default function LoginPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
+      .then(res => {
+        status = res.status;
+        return res.json();
+      })
       .then(data => {
-        localStorage.setItem("jwt", data.token);
-        console.log("Login res: ");
-        console.log(data);
-        window.location = "/";
+        if (status === 200) {
+          localStorage.setItem("jwt", data.token);
+          context.updateUserStatus(data);
+          // console.log("Login res: ");
+          // console.log(data);
+          history.push("/");
+        } else {
+          console.log(data.error);
+        }
       })
       .catch(err => console.log(err));
   };

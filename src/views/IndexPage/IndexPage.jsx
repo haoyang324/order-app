@@ -1,4 +1,5 @@
 import React from "react";
+import { MyContext } from "Context.jsx";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // core components
@@ -17,12 +18,11 @@ import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
 const useStyles = makeStyles(styles);
 
 export default function EcommercePage() {
+  const context = React.useContext(MyContext);
   const [products, setProducts] = React.useState([]);
-  const [cart, setCart] = React.useState([]);
-  const [, setNum] = React.useState(0);
 
   const addToCart = (product, qty) => {
-    let tempCart = cart;
+    let tempCart = context.state.cart;
     const productInCart = tempCart.find(element => element._id === product._id);
     if (productInCart) {
       productInCart["quantity"] += qty;
@@ -35,8 +35,7 @@ export default function EcommercePage() {
         quantity: qty
       });
     }
-    setCart(tempCart);
-    setNum(1); // Why it works? Badge won't update without it
+    context.updateCart(tempCart);
     localStorage.setItem("shoppingCartProducts", JSON.stringify(tempCart));
   };
 
@@ -49,20 +48,10 @@ export default function EcommercePage() {
       .then(data => setProducts(data))
       .catch(err => console.log(err));
 
-  const getCartFromLocalStorage = () => {
-    const productsInLocalStorage = JSON.parse(
-      localStorage.getItem("shoppingCartProducts")
-    );
-    if (productsInLocalStorage) {
-      setCart(productsInLocalStorage);
-    }
-  };
-
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     fetchProducts();
-    getCartFromLocalStorage();
   }, []); //Probably not a good approach.
 
   const classes = useStyles();
@@ -78,6 +67,7 @@ export default function EcommercePage() {
           color: "info"
         }}
       />
+
       <Parallax
         image={require("assets/img/examples/clark-street-merc.jpg")}
         filter="dark"

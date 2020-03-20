@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 // react components for routing our app without refresh
 import { Link } from "react-router-dom";
 
+import { MyContext } from "Context.jsx";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Badge from "@material-ui/core/Badge";
@@ -94,11 +95,16 @@ export default function HeaderLinks(props) {
             // dropdownHeader="Dropdown Header"
             buttonText={
               // <img src={profileImage} className={classes.img} alt="profile" />
-              <div>
-                <PersonIcon />{" "}
-                {window.innerWidth < 960 &&
-                  "Hi, " + JSON.parse(localStorage.getItem("userProfile")).name}
-              </div>
+              <MyContext.Consumer>
+                {context => (
+                  <React.Fragment>
+                    <PersonIcon />
+                    {"Hi, " + context.state.userProfile["name"]}
+                    {/* {window.innerWidth < 960 &&
+                      "Hi, " + context.state.userProfile["name"]} */}
+                  </React.Fragment>
+                )}
+              </MyContext.Consumer>
             }
             buttonProps={{
               className: classes.navLink + " " + classes.imageDropdownButton,

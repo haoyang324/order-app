@@ -4,7 +4,9 @@ import React, { Component } from "react";
 export const MyContext = React.createContext();
 export class MyProvider extends Component {
   state = {
-    userProfile: {},
+    userProfile: {
+      name: "Guest"
+    },
     jwt: ""
   };
 

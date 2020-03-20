@@ -7,6 +7,7 @@ export class MyProvider extends Component {
     userProfile: {
       name: "Guest"
     },
+    cart: [],
     jwt: ""
   };
 
@@ -18,7 +19,7 @@ export class MyProvider extends Component {
       let status = 0;
 
       console.log("Found JWT");
-      console.log(this.state.jwt);
+      // console.log(this.state.jwt);
 
       fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me", {
         method: "GET",
@@ -36,11 +37,14 @@ export class MyProvider extends Component {
             await this.setState({
               userProfile: data
             });
-            console.log("Below user profile has been updated to state:");
+            console.log("Below user profile has been updated to context:");
             console.log(data);
           } else {
             localStorage.removeItem("jwt");
             console.log("JWT invalid. JWT removed");
+            await this.setState({
+              userProfile: {}
+            });
           }
         })
         .catch(err => console.log(err));
@@ -49,13 +53,31 @@ export class MyProvider extends Component {
     }
   };
 
+  updateCart = cart => {
+    console.log("Update cart");
+    console.log(cart);
+
+    if (cart) {
+      this.setState({
+        cart: cart
+      });
+    }
+  };
+
   componentDidMount() {
     this.updateUserStatus();
+    this.updateCart(JSON.parse(localStorage.getItem("shoppingCartProducts")));
   }
 
   render() {
     return (
-      <MyContext.Provider value={{ state: this.state }}>
+      <MyContext.Provider
+        value={{
+          state: this.state,
+          updateUserStatus: this.updateUserStatus,
+          updateCart: this.updateCart
+        }}
+      >
         {this.props.children}
       </MyContext.Provider>
     );

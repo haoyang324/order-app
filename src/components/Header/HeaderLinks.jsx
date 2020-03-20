@@ -1,21 +1,16 @@
 // /* eslint-disable */
 import React from "react";
-// nodejs library to set properties for components
 import PropTypes from "prop-types";
-// react components for routing our app without refresh
-import { Link } from "react-router-dom";
-
+import { useHistory, Link } from "react-router-dom";
 import { MyContext } from "Context.jsx";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Badge from "@material-ui/core/Badge";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-
 // @material-ui/icons
 import PersonIcon from "@material-ui/icons/Person";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
-
 // core components
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import Button from "components/CustomButtons/Button.js";
@@ -25,24 +20,11 @@ import styles from "assets/jss/material-kit-pro-react/components/headerLinksStyl
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
+  let context = React.useContext(MyContext);
+  let badge = context.state.cart.length;
+  let history = useHistory();
   const { dropdownHoverColor } = props;
   const classes = useStyles();
-  const [badge, setBadge] = React.useState(0);
-
-  const getCart = () => {
-    const cartProducts = JSON.parse(
-      localStorage.getItem("shoppingCartProducts")
-    );
-    if (cartProducts) {
-      setBadge(cartProducts.length);
-    } else {
-      setBadge(0);
-    }
-  };
-
-  React.useEffect(() => {
-    getCart();
-  });
 
   const signOut = () => {
     fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me/logout", {
@@ -57,7 +39,7 @@ export default function HeaderLinks(props) {
         localStorage.clear();
         console.log("Sign out res:");
         console.log(data);
-        window.location = "/";
+        history.push("/");
       })
       .catch(err => console.log(err));
   };
@@ -138,9 +120,11 @@ export default function HeaderLinks(props) {
         </ListItem>
       ) : (
         <ListItem className={classes.listItem}>
-          <Button href="/login" className={classes.navLink} color="transparent">
-            Login
-          </Button>
+          <Link to="/login">
+            <Button className={classes.navLink} color="transparent">
+              Login
+            </Button>
+          </Link>
         </ListItem>
       )}
       <ListItem className={classes.listItem}>

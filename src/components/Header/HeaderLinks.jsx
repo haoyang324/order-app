@@ -122,7 +122,7 @@ export default function HeaderLinks(props) {
         <ListItem className={classes.listItem}>
           <Button
             onClick={() => history.push("/login")}
-            className={classes.navButton}
+            className={classes.navLink}
             color="transparent"
           >
             Login

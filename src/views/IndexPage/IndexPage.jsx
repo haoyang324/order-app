@@ -17,7 +17,7 @@ import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
 
 const useStyles = makeStyles(styles);
 
-export default function EcommercePage() {
+export default function IndexPage() {
   const context = React.useContext(MyContext);
   const [products, setProducts] = React.useState([]);
 

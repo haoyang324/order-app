@@ -78,6 +78,7 @@ export default function EcommercePage() {
           color: "info"
         }}
       />
+
       <Parallax
         image={require("assets/img/examples/clark-street-merc.jpg")}
         filter="dark"

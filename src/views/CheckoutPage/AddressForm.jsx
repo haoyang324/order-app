@@ -15,7 +15,12 @@ export default function AddressForm(props) {
       [event.target.name]: event.target.value
     }));
   };
-
+  const handleToggle = () => {
+    setAddress(prevState => ({
+      ...prevState,
+      save: !address.save
+    }));
+  };
   return (
     <React.Fragment>
       <h3> Shipping address</h3>
@@ -23,10 +28,10 @@ export default function AddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            value={address.firstName}
+            id="name"
+            name="name"
+            label="Contact name"
+            value={address.name}
             onChange={handleChange}
             fullWidth
             autoComplete="fname"
@@ -35,10 +40,10 @@ export default function AddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            value={address.lastName}
+            id="phone"
+            name="phone"
+            label="Phone Number"
+            value={address.phone}
             onChange={handleChange}
             fullWidth
             autoComplete="lname"
@@ -105,7 +110,12 @@ export default function AddressForm(props) {
         <Grid item xs={12}>
           <FormControlLabel
             control={
-              <Checkbox color="secondary" name="saveAddress" value="yes" />
+              <Checkbox
+                onClick={handleToggle}
+                color="secondary"
+                name="saveAddress"
+                value="no"
+              />
             }
             label="Save this address for further shopping"
           />

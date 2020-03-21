@@ -53,15 +53,16 @@ const steps = ["Shipping address", "Payment details", "Review your order"];
 
 export default function Checkout({ ...params }) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [address, setAddress] = React.useState({
-    firstName: "Haoyang",
-    lastName: "Wang",
+    name: "Haoyang",
+    phone: "7785529180",
     address: "Parker Street",
     city: "Burnaby",
     province: "BC",
     zip: "V5C3E3",
-    country: "Canada"
+    country: "Canada",
+    save: false
   });
   const [payment, setPayment] = React.useState({
     cardName: "Haoyang Wang",
@@ -98,8 +99,11 @@ export default function Checkout({ ...params }) {
   const placeOrder = () => {
     const data = {
       date: new Date(),
-      address: JSON.stringify(address)
+      address: address,
+      products: cart
     };
+
+    // Place the order
     fetch(process.env.REACT_APP_REST_API_LOCATION + "/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -110,6 +114,24 @@ export default function Checkout({ ...params }) {
         console.log(data);
       })
       .catch(err => console.log(err));
+
+    // Save the address for further shopping
+    if (address.save) {
+      fetch(
+        process.env.REACT_APP_REST_API_LOCATION + "/users/me/defaultaddress",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt")
+          },
+          body: JSON.stringify(address)
+        }
+      )
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err));
+    }
   };
 
   React.useEffect(() => {

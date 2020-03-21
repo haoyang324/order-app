@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
+import Button from "components/CustomButtons/Button.js";
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -16,11 +17,19 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     marginTop: theme.spacing(2)
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1)
   }
 }));
 
 export default function Review(props) {
-  const { cart, address, payment } = props;
+  const { cart, address, payment, handleSteps, placeOrder } = props;
   const classes = useStyles();
 
   const getTotal = () => {
@@ -37,8 +46,11 @@ export default function Review(props) {
       <List disablePadding>
         {cart.map(product => (
           <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.quantity} />
-            <Typography variant="body2">{product.price}</Typography>
+            <ListItemText
+              primary={product.name}
+              secondary={"Qty: ".concat(product.quantity)}
+            />
+            <Typography variant="body2">{"$".concat(product.price)}</Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
@@ -51,16 +63,14 @@ export default function Review(props) {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <h3>Shipping</h3>
-          <Typography gutterBottom>
-            {address.firstName + " " + address.lastName}
-          </Typography>
+          <Typography gutterBottom>{address.name}</Typography>
           <Typography>
             {address.address + ", " + address.city + ", "}
           </Typography>
           <Typography gutterBottom>
             {address.province + ", " + address.country + ", " + address.zip}
           </Typography>
-          {/* <Typography gutterBottom>{addres(", ")}</Typography> */}
+          <Typography gutterBottom>{"Phone: " + address.phone}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <h3>Payment details</h3>
@@ -78,6 +88,23 @@ export default function Review(props) {
           </Grid>
         </Grid>
       </Grid>
+      <div className={classes.buttons}>
+        <Button
+          variant="contained"
+          onClick={() => handleSteps(-1)}
+          className={classes.button}
+        >
+          Back
+        </Button>
+        <Button
+          variant="contained"
+          color="info"
+          onClick={placeOrder}
+          className={classes.button}
+        >
+          Place Order
+        </Button>
+      </div>
     </React.Fragment>
   );
 }
@@ -85,5 +112,7 @@ export default function Review(props) {
 Review.propTypes = {
   cart: PropTypes.array,
   address: PropTypes.object,
-  payment: PropTypes.object
+  payment: PropTypes.object,
+  handleSteps: PropTypes.func,
+  placeOrder: PropTypes.func
 };

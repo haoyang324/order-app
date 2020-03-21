@@ -6,11 +6,11 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Typography from "@material-ui/core/Typography";
+import Header from "components/Header/Header.jsx";
+import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-
-import Button from "components/CustomButtons/Button.js";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -27,25 +27,17 @@ const useStyles = makeStyles(theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(10),
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
+      marginTop: theme.spacing(10),
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3)
     }
   },
   stepper: {
     padding: theme.spacing(3, 0, 5)
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end"
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1)
   }
 }));
 
@@ -75,25 +67,38 @@ export default function Checkout({ ...params }) {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <AddressForm address={address} setAddress={setAddress} />;
+        return (
+          <AddressForm
+            handleSteps={handleSteps}
+            address={address}
+            setAddress={setAddress}
+          />
+        );
       case 1:
-        return <PaymentForm payment={payment} setPayment={setPayment} />;
+        return (
+          <PaymentForm
+            handleSteps={handleSteps}
+            payment={payment}
+            setPayment={setPayment}
+          />
+        );
       case 2:
-        return <Review address={address} payment={payment} cart={cart} />;
+        return (
+          <Review
+            handleSteps={handleSteps}
+            placeOrder={placeOrder}
+            address={address}
+            payment={payment}
+            cart={cart}
+          />
+        );
       default:
         throw new Error("Unknown step");
     }
   }
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-    if (activeStep === 2) {
-      placeOrder();
-    }
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
+  const handleSteps = page => {
+    setActiveStep(activeStep + page);
   };
 
   const placeOrder = () => {
@@ -112,6 +117,7 @@ export default function Checkout({ ...params }) {
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        handleSteps(1);
       })
       .catch(err => console.log(err));
 
@@ -140,6 +146,12 @@ export default function Checkout({ ...params }) {
 
   return (
     <React.Fragment>
+      <Header
+        brand="Brand Name"
+        links={<HeaderLinks dropdownHoverColor="info" />}
+        absolute
+        color="info"
+      />
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -164,24 +176,7 @@ export default function Checkout({ ...params }) {
                 </Typography>
               </React.Fragment>
             ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
-                  )}
-                  <Button
-                    variant="contained"
-                    color="info"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
-                  </Button>
-                </div>
-              </React.Fragment>
+              <React.Fragment>{getStepContent(activeStep)}</React.Fragment>
             )}
           </React.Fragment>
         </Paper>

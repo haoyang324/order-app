@@ -10,16 +10,28 @@ import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui icons
 import Add from "@material-ui/icons/Add";
-import ClearIcon from "@material-ui/icons/Clear";
 import Close from "@material-ui/icons/Close";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
+import PersonIcon from "@material-ui/icons/Person";
 import Remove from "@material-ui/icons/Remove";
 
 import styles from "assets/jss/material-kit-pro-react/views/sectionCartStyle.jsx";
 
 import { Link } from "react-router-dom";
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles(theme => ({
+  ...styles,
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end",
+    flexWrap: "wrap"
+  },
+  button: {
+    [theme.breakpoints.down("xs")]: {
+      width: "100%"
+    }
+  }
+}));
 
 export default function SectionCart() {
   const context = React.useContext(MyContext);
@@ -46,11 +58,6 @@ export default function SectionCart() {
     context.updateCart(tempCart);
   };
 
-  const handleClearAll = () => {
-    localStorage.setItem("shoppingCartProducts", JSON.stringify([]));
-    context.updateCart([]);
-  };
-
   return (
     <div className={classes.section}>
       <div className={classes.container}></div>
@@ -74,11 +81,12 @@ export default function SectionCart() {
                 <h4 className={classes.cardTitle}>{product.name}</h4>
                 <div>
                   <div style={{ float: "left" }}>
-                    <span>Qty: </span>
+                    <span>Qty:</span>
                     <Button
                       onClick={() => handleQtyChange(product, -1)}
                       justIcon
                       simple
+                      size="sm"
                       color="rose"
                     >
                       <Remove />
@@ -88,6 +96,7 @@ export default function SectionCart() {
                       onClick={() => handleQtyChange(product, 1)}
                       justIcon
                       simple
+                      size="sm"
                       color="rose"
                     >
                       <Add />
@@ -104,6 +113,7 @@ export default function SectionCart() {
                         link
                         className={classes.actionButton}
                         onClick={() => handleQtyChange(product, 0)}
+                        size="sm"
                       >
                         <Close />
                       </Button>
@@ -118,24 +128,52 @@ export default function SectionCart() {
         <h4> Your cart empty</h4>
       )}
       {cart.length ? (
-        <div>
-          <div style={{ float: "left" }}>
-            <Button type="button" round onClick={() => handleClearAll()}>
-              <ClearIcon className={classes.icons} /> Clear All
-            </Button>
-          </div>
-          <div style={{ float: "right" }}>
+        <div className={classes.buttons}>
+          {context.state.loggedIn ? (
             <Link
               to={{
                 pathname: "/checkout",
                 state: cart
               }}
             >
-              <Button type="button" color="warning" round>
+              <Button
+                className={classes.button}
+                type="button"
+                color="warning"
+                round
+              >
                 <DoneAllIcon className={classes.icons} /> Checkout
               </Button>
             </Link>
-          </div>
+          ) : (
+            <div>
+              <Link to="/login">
+                <Button
+                  className={classes.button}
+                  type="button"
+                  color="info"
+                  round
+                >
+                  <PersonIcon className={classes.icons} /> Login
+                </Button>
+              </Link>
+              <Link
+                to={{
+                  pathname: "/checkout",
+                  state: cart
+                }}
+              >
+                <Button
+                  className={classes.button}
+                  type="button"
+                  color="info"
+                  round
+                >
+                  <DoneAllIcon className={classes.icons} /> Checkout As Guest
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       ) : (
         <div>

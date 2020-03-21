@@ -37,6 +37,7 @@ export default function HeaderLinks(props) {
       .then(res => res.json())
       .then(data => {
         localStorage.clear();
+        context.updateUserStatus();
         console.log("Sign out res:");
         console.log(data);
         history.push("/");

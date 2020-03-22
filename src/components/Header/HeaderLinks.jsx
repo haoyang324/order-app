@@ -37,6 +37,7 @@ export default function HeaderLinks(props) {
       .then(res => res.json())
       .then(data => {
         localStorage.clear();
+        context.updateUserStatus();
         console.log("Sign out res:");
         console.log(data);
         history.push("/");
@@ -122,7 +123,7 @@ export default function HeaderLinks(props) {
         <ListItem className={classes.listItem}>
           <Button
             onClick={() => history.push("/login")}
-            className={classes.navButton}
+            className={classes.navLink}
             color="transparent"
           >
             Login

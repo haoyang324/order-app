@@ -19,7 +19,7 @@ import profilePageStyle from "assets/jss/material-kit-pro-react/views/profilePag
 
 const useStyles = makeStyles(profilePageStyle);
 
-export default function ProfilePage({ ...rest }) {
+export default function ProfilePage() {
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
@@ -30,7 +30,7 @@ export default function ProfilePage({ ...rest }) {
     classes.imgRoundedCircle,
     classes.imgFluid
   );
-  const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
+
   return (
     <div>
       <Header

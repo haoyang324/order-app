@@ -7,6 +7,7 @@ export class MyProvider extends Component {
     userProfile: {
       name: "Guest"
     },
+    loggedIn: false,
     cart: [],
     jwt: ""
   };
@@ -15,11 +16,11 @@ export class MyProvider extends Component {
     await this.setState({
       jwt: localStorage.getItem("jwt")
     });
-    if (this.state.jwt !== "") {
+    if (this.state.jwt) {
       let status = 0;
 
       console.log("Found JWT");
-      // console.log(this.state.jwt);
+      console.log(this.state.jwt);
 
       fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me", {
         method: "GET",
@@ -35,7 +36,8 @@ export class MyProvider extends Component {
         .then(async data => {
           if (status === 200) {
             await this.setState({
-              userProfile: data
+              userProfile: data,
+              loggedIn: true
             });
             console.log("Below user profile has been updated to context:");
             console.log(data);
@@ -50,6 +52,12 @@ export class MyProvider extends Component {
         .catch(err => console.log(err));
     } else {
       console.log("JWT not found");
+      this.setState({
+        userProfile: {
+          name: "Guest"
+        },
+        loggedIn: false
+      });
     }
   };
 

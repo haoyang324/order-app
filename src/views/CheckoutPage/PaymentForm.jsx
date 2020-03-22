@@ -1,12 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import Checkbox from "@material-ui/core/Checkbox";
+import Button from "components/CustomButtons/Button.js";
 
+const useStyles = makeStyles(theme => ({
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1)
+  }
+}));
 export default function PaymentForm(props) {
-  const { payment, setPayment } = props;
+  const classes = useStyles();
+  const { payment, setPayment, handleSteps } = props;
 
   const handleChange = event => {
     event.persist();
@@ -65,17 +76,29 @@ export default function PaymentForm(props) {
             fullWidth
           />
         </Grid>
-        {/* <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
-          />
-        </Grid> */}
       </Grid>
+      <div className={classes.buttons}>
+        <Button
+          variant="contained"
+          onClick={() => handleSteps(-1)}
+          className={classes.button}
+        >
+          Back
+        </Button>
+        <Button
+          variant="contained"
+          color="info"
+          onClick={() => handleSteps(1)}
+          className={classes.button}
+        >
+          Next
+        </Button>
+      </div>
     </React.Fragment>
   );
 }
 PaymentForm.propTypes = {
   payment: PropTypes.object,
-  setPayment: PropTypes.func
+  setPayment: PropTypes.func,
+  handleSteps: PropTypes.func
 };

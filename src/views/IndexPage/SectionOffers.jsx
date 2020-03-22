@@ -23,7 +23,7 @@ import styles from "assets/jss/material-kit-pro-react/views/ecommerceSections/la
 
 const useStyles = makeStyles(styles);
 
-export default function SectionLatestOffers(props) {
+export default function SectionOffers(props) {
   const classes = useStyles();
   const { products, addToCart } = props;
   const [qty, setQty] = React.useState([]);
@@ -128,7 +128,7 @@ export default function SectionLatestOffers(props) {
   );
 }
 
-SectionLatestOffers.propTypes = {
+SectionOffers.propTypes = {
   products: PropTypes.any,
   addToCart: PropTypes.func
 };

@@ -1,12 +1,30 @@
 import React from "react";
+import { MyContext } from "Context.jsx";
+import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Button from "components/CustomButtons/Button.js";
+
+const useStyles = makeStyles(theme => ({
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1)
+  }
+}));
 
 export default function AddressForm(props) {
-  const { address, setAddress } = props;
+  let context = React.useContext(MyContext);
+  const classes = useStyles();
+  const { address, setAddress, handleSteps } = props;
+  const [checked, setChecked] = React.useState(false);
+  const [validate, setValidate] = React.useState(false);
 
   const handleChange = event => {
     event.persist();
@@ -14,6 +32,24 @@ export default function AddressForm(props) {
       ...prevState,
       [event.target.name]: event.target.value
     }));
+  };
+  const handleToggle = () => {
+    setAddress(prevState => ({
+      ...prevState,
+      save: !checked
+    }));
+    setChecked(!checked);
+  };
+
+  const submitAddress = () => {
+    let completed = true;
+    for (let x in address) {
+      if (address[x] === "") {
+        setValidate(true);
+        completed = false;
+      }
+    }
+    completed && handleSteps(1);
   };
 
   return (
@@ -23,11 +59,12 @@ export default function AddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            value={address.firstName}
+            id="name"
+            name="name"
+            label="Contact name"
+            value={address.name}
             onChange={handleChange}
+            error={address.name === "" && validate}
             fullWidth
             autoComplete="fname"
           />
@@ -35,11 +72,12 @@ export default function AddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            value={address.lastName}
+            id="phone"
+            name="phone"
+            label="Phone Number"
+            value={address.phone}
             onChange={handleChange}
+            error={address.phone === "" && validate}
             fullWidth
             autoComplete="lname"
           />
@@ -52,6 +90,7 @@ export default function AddressForm(props) {
             label="Address line"
             value={address.address}
             onChange={handleChange}
+            error={address.address === "" && validate}
             fullWidth
             autoComplete="billing address-line1"
           />
@@ -64,6 +103,7 @@ export default function AddressForm(props) {
             label="City"
             value={address.city}
             onChange={handleChange}
+            error={address.city === "" && validate}
             fullWidth
             autoComplete="billing address-level2"
           />
@@ -75,6 +115,7 @@ export default function AddressForm(props) {
             label="Province"
             value={address.province}
             onChange={handleChange}
+            error={address.province === "" && validate}
             fullWidth
           />
         </Grid>
@@ -86,6 +127,7 @@ export default function AddressForm(props) {
             label="Postal code"
             value={address.zip}
             onChange={handleChange}
+            error={address.zip === "" && validate}
             fullWidth
             autoComplete="billing postal-code"
           />
@@ -98,6 +140,7 @@ export default function AddressForm(props) {
             label="Country"
             value={address.country}
             onChange={handleChange}
+            error={address.country === "" && validate}
             fullWidth
             autoComplete="billing country"
           />
@@ -105,16 +148,45 @@ export default function AddressForm(props) {
         <Grid item xs={12}>
           <FormControlLabel
             control={
-              <Checkbox color="secondary" name="saveAddress" value="yes" />
+              <Checkbox
+                onClick={handleToggle}
+                color="secondary"
+                name="saveAddress"
+                value="no"
+                checked={checked}
+              />
             }
             label="Save this address for further shopping"
           />
         </Grid>
       </Grid>
+      <div className={classes.buttons}>
+        {context.state.userProfile.defaultAddress && (
+          <Button
+            color="warning"
+            className={classes.button}
+            onClick={() => {
+              setAddress(context.state.userProfile.defaultAddress);
+              setChecked(false);
+            }}
+          >
+            Load your last address
+          </Button>
+        )}
+        <Button
+          variant="contained"
+          color="info"
+          onClick={submitAddress}
+          className={classes.button}
+        >
+          Next
+        </Button>
+      </div>
     </React.Fragment>
   );
 }
 AddressForm.propTypes = {
   address: PropTypes.object,
-  setAddress: PropTypes.func
+  setAddress: PropTypes.func,
+  handleSteps: PropTypes.func
 };

@@ -23,6 +23,7 @@ import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageSty
 import image from "assets/img/bg7.jpg";
 
 const useStyles = makeStyles(loginPageStyle);
+
 export default function LoginPage() {
   let history = useHistory();
   let context = React.useContext(MyContext);

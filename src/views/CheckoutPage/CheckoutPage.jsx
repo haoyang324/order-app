@@ -6,11 +6,11 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Typography from "@material-ui/core/Typography";
+import Header from "components/Header/Header.jsx";
+import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-
-import Button from "components/CustomButtons/Button.js";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -27,25 +27,17 @@ const useStyles = makeStyles(theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(10),
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
+      marginTop: theme.spacing(10),
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3)
     }
   },
   stepper: {
     padding: theme.spacing(3, 0, 5)
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end"
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1)
   }
 }));
 
@@ -53,15 +45,16 @@ const steps = ["Shipping address", "Payment details", "Review your order"];
 
 export default function Checkout({ ...params }) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [address, setAddress] = React.useState({
-    firstName: "Haoyang",
-    lastName: "Wang",
+    name: "Haoyang",
+    phone: "7785529180",
     address: "Parker Street",
     city: "Burnaby",
     province: "BC",
     zip: "V5C3E3",
-    country: "Canada"
+    country: "Canada",
+    save: false
   });
   const [payment, setPayment] = React.useState({
     cardName: "Haoyang Wang",
@@ -70,54 +63,116 @@ export default function Checkout({ ...params }) {
     cvv: "000"
   });
   const [cart, setCart] = React.useState([]);
+  const [guest, setGuest] = React.useState(false);
 
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <AddressForm address={address} setAddress={setAddress} />;
+        return (
+          <AddressForm
+            handleSteps={handleSteps}
+            address={address}
+            setAddress={setAddress}
+          />
+        );
       case 1:
-        return <PaymentForm payment={payment} setPayment={setPayment} />;
+        return (
+          <PaymentForm
+            handleSteps={handleSteps}
+            payment={payment}
+            setPayment={setPayment}
+          />
+        );
       case 2:
-        return <Review address={address} payment={payment} cart={cart} />;
+        return (
+          <Review
+            handleSteps={handleSteps}
+            placeOrder={placeOrder}
+            address={address}
+            payment={payment}
+            cart={cart}
+          />
+        );
       default:
         throw new Error("Unknown step");
     }
   }
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-    if (activeStep === 2) {
-      placeOrder();
-    }
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
+  const handleSteps = page => {
+    setActiveStep(activeStep + page);
   };
 
   const placeOrder = () => {
     const data = {
       date: new Date(),
-      address: JSON.stringify(address)
+      address: address,
+      products: cart
     };
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/orders", {
+
+    // Make headers and paths for user and guest
+    let apiPath = "/orders/order";
+    let headers = {
+      "Content-Type": "application/json"
+    };
+    if (guest) {
+      apiPath = "/orders/guestorder";
+    } else {
+      headers = {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      };
+    }
+
+    // Place the order
+    fetch(process.env.REACT_APP_REST_API_LOCATION + apiPath, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: headers,
       body: JSON.stringify(data)
     })
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        handleSteps(1);
       })
       .catch(err => console.log(err));
+
+    // Save the address for further shopping
+    if (address.save) {
+      fetch(
+        process.env.REACT_APP_REST_API_LOCATION + "/users/me/defaultaddress",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt")
+          },
+          body: JSON.stringify(address)
+        }
+      )
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err));
+    }
   };
 
   React.useEffect(() => {
-    setCart(params.location.state);
+    setCart(params.location.state.cart);
+    setGuest(params.location.state.guest);
   }, [params.location.state]);
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+  }, []);
 
   return (
     <React.Fragment>
+      <Header
+        brand="Brand Name"
+        links={<HeaderLinks dropdownHoverColor="info" />}
+        absolute
+        color="info"
+      />
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -142,24 +197,7 @@ export default function Checkout({ ...params }) {
                 </Typography>
               </React.Fragment>
             ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
-                  )}
-                  <Button
-                    variant="contained"
-                    color="info"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
-                  </Button>
-                </div>
-              </React.Fragment>
+              <React.Fragment>{getStepContent(activeStep)}</React.Fragment>
             )}
           </React.Fragment>
         </Paper>

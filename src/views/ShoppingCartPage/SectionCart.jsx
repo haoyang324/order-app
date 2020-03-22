@@ -3,23 +3,34 @@ import { MyContext } from "Context.jsx";
 // core components
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui icons
 import Add from "@material-ui/icons/Add";
-import ClearIcon from "@material-ui/icons/Clear";
 import Close from "@material-ui/icons/Close";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
+import PersonIcon from "@material-ui/icons/Person";
 import Remove from "@material-ui/icons/Remove";
-
 import styles from "assets/jss/material-kit-pro-react/views/sectionCartStyle.jsx";
+import imagesStyles from "assets/jss/material-kit-pro-react/imagesStyles.js";
 
 import { Link } from "react-router-dom";
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles(theme => ({
+  ...styles,
+  ...imagesStyles,
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end",
+    flexWrap: "wrap"
+  },
+  button: {
+    [theme.breakpoints.down("xs")]: {
+      // width: "100%"
+    }
+  }
+}));
 
 export default function SectionCart() {
   const context = React.useContext(MyContext);
@@ -46,11 +57,6 @@ export default function SectionCart() {
     context.updateCart(tempCart);
   };
 
-  const handleClearAll = () => {
-    localStorage.setItem("shoppingCartProducts", JSON.stringify([]));
-    context.updateCart([]);
-  };
-
   return (
     <div className={classes.section}>
       <div className={classes.container}></div>
@@ -58,27 +64,25 @@ export default function SectionCart() {
 
       {cart.length ? (
         cart.map(product => (
-          <Grid
-            container
-            // md={10}
-            // lg={8}
-            spacing={3}
-            style={{ margin: "auto" }}
-            key={product._id}
-          >
-            <Grid item xs={4} sm={4} lg={4}>
-              <CardMedia className={classes.cardMedia} image={product.imgURL} />
+          <Grid container spacing={3} key={product._id}>
+            <Grid item xs={12} sm={4} lg={4}>
+              <img
+                className={classes.imgCard}
+                src={product.imgURL}
+                alt="Card-img"
+              />
             </Grid>
-            <Grid item xs={8} sm={8} lg={8}>
+            <Grid item xs={12} sm={8} lg={8} style={{ margin: "auto" }}>
               <CardBody plain style={{ marginBottom: 80, marginTop: 0 }}>
                 <h4 className={classes.cardTitle}>{product.name}</h4>
                 <div>
                   <div style={{ float: "left" }}>
-                    <span>Qty: </span>
+                    <span>Qty:</span>
                     <Button
                       onClick={() => handleQtyChange(product, -1)}
                       justIcon
                       simple
+                      size="sm"
                       color="rose"
                     >
                       <Remove />
@@ -88,6 +92,7 @@ export default function SectionCart() {
                       onClick={() => handleQtyChange(product, 1)}
                       justIcon
                       simple
+                      size="sm"
                       color="rose"
                     >
                       <Add />
@@ -104,6 +109,7 @@ export default function SectionCart() {
                         link
                         className={classes.actionButton}
                         onClick={() => handleQtyChange(product, 0)}
+                        size="sm"
                       >
                         <Close />
                       </Button>
@@ -118,24 +124,58 @@ export default function SectionCart() {
         <h4> Your cart empty</h4>
       )}
       {cart.length ? (
-        <div>
-          <div style={{ float: "left" }}>
-            <Button type="button" round onClick={() => handleClearAll()}>
-              <ClearIcon className={classes.icons} /> Clear All
-            </Button>
-          </div>
-          <div style={{ float: "right" }}>
+        <div className={classes.buttons}>
+          {context.state.loggedIn ? (
             <Link
               to={{
                 pathname: "/checkout",
-                state: cart
+                state: {
+                  cart: cart,
+                  guest: false
+                }
               }}
             >
-              <Button type="button" color="warning" round>
+              <Button
+                className={classes.button}
+                type="button"
+                color="warning"
+                round
+              >
                 <DoneAllIcon className={classes.icons} /> Checkout
               </Button>
             </Link>
-          </div>
+          ) : (
+            <div>
+              <Link to="/login">
+                <Button
+                  className={classes.button}
+                  type="button"
+                  color="info"
+                  round
+                >
+                  <PersonIcon className={classes.icons} /> Login
+                </Button>
+              </Link>
+              <Link
+                to={{
+                  pathname: "/checkout",
+                  state: {
+                    cart: cart,
+                    guest: true
+                  }
+                }}
+              >
+                <Button
+                  className={classes.button}
+                  type="button"
+                  color="info"
+                  round
+                >
+                  <DoneAllIcon className={classes.icons} /> Checkout As Guest
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       ) : (
         <div>

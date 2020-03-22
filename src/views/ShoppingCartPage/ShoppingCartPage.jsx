@@ -18,6 +18,11 @@ const useStyles = makeStyles(shoppingCartStyle);
 export default function ShoppingCartPage() {
   const classes = useStyles();
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+  });
+
   return (
     <div>
       <Header

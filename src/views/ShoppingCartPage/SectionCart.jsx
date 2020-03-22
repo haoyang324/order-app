@@ -3,9 +3,7 @@ import { MyContext } from "Context.jsx";
 // core components
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui icons
@@ -14,13 +12,14 @@ import Close from "@material-ui/icons/Close";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import PersonIcon from "@material-ui/icons/Person";
 import Remove from "@material-ui/icons/Remove";
-
 import styles from "assets/jss/material-kit-pro-react/views/sectionCartStyle.jsx";
+import imagesStyles from "assets/jss/material-kit-pro-react/imagesStyles.js";
 
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   ...styles,
+  ...imagesStyles,
   buttons: {
     display: "flex",
     justifyContent: "flex-end",
@@ -28,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     [theme.breakpoints.down("xs")]: {
-      width: "100%"
+      // width: "100%"
     }
   }
 }));
@@ -65,18 +64,15 @@ export default function SectionCart() {
 
       {cart.length ? (
         cart.map(product => (
-          <Grid
-            container
-            // md={10}
-            // lg={8}
-            spacing={3}
-            style={{ margin: "auto" }}
-            key={product._id}
-          >
-            <Grid item xs={4} sm={4} lg={4}>
-              <CardMedia className={classes.cardMedia} image={product.imgURL} />
+          <Grid container spacing={3} key={product._id}>
+            <Grid item xs={12} sm={4} lg={4}>
+              <img
+                className={classes.imgCard}
+                src={product.imgURL}
+                alt="Card-img"
+              />
             </Grid>
-            <Grid item xs={8} sm={8} lg={8}>
+            <Grid item xs={12} sm={8} lg={8} style={{ margin: "auto" }}>
               <CardBody plain style={{ marginBottom: 80, marginTop: 0 }}>
                 <h4 className={classes.cardTitle}>{product.name}</h4>
                 <div>

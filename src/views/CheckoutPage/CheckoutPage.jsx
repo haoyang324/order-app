@@ -144,6 +144,11 @@ export default function Checkout({ ...params }) {
     setCart(params.location.state);
   }, [params.location.state]);
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+  }, []);
+
   return (
     <React.Fragment>
       <Header

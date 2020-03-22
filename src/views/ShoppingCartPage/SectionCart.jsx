@@ -129,7 +129,10 @@ export default function SectionCart() {
             <Link
               to={{
                 pathname: "/checkout",
-                state: cart
+                state: {
+                  cart: cart,
+                  guest: false
+                }
               }}
             >
               <Button
@@ -156,7 +159,10 @@ export default function SectionCart() {
               <Link
                 to={{
                   pathname: "/checkout",
-                  state: cart
+                  state: {
+                    cart: cart,
+                    guest: true
+                  }
                 }}
               >
                 <Button

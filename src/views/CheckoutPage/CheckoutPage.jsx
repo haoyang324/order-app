@@ -63,6 +63,7 @@ export default function Checkout({ ...params }) {
     cvv: "000"
   });
   const [cart, setCart] = React.useState([]);
+  const [guest, setGuest] = React.useState(false);
 
   function getStepContent(step) {
     switch (step) {
@@ -108,10 +109,24 @@ export default function Checkout({ ...params }) {
       products: cart
     };
 
+    // Make headers and paths for user and guest
+    let apiPath = "/orders/order";
+    let headers = {
+      "Content-Type": "application/json"
+    };
+    if (guest) {
+      apiPath = "/orders/guestorder";
+    } else {
+      headers = {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      };
+    }
+
     // Place the order
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/orders", {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + apiPath, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: headers,
       body: JSON.stringify(data)
     })
       .then(res => res.json())
@@ -141,7 +156,8 @@ export default function Checkout({ ...params }) {
   };
 
   React.useEffect(() => {
-    setCart(params.location.state);
+    setCart(params.location.state.cart);
+    setGuest(params.location.state.guest);
   }, [params.location.state]);
 
   React.useEffect(() => {

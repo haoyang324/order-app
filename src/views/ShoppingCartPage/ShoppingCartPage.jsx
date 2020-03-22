@@ -3,7 +3,6 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-// @material-ui/icons
 // core components
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
@@ -17,28 +16,13 @@ import shoppingCartStyle from "assets/jss/material-kit-pro-react/views/shoppingC
 const useStyles = makeStyles(shoppingCartStyle);
 
 export default function ShoppingCartPage() {
-  const [cart, setCart] = React.useState([]);
-
-  const checkOut = () => {};
-
-  const getProductsFromLocalStorage = () => {
-    const productsInLocalStorage = JSON.parse(
-      localStorage.getItem("shoppingCartProducts")
-    );
-    if (productsInLocalStorage) {
-      setCart(productsInLocalStorage);
-    }
-
-    // setTest(productsInLocalStorage);
-  };
+  const classes = useStyles();
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-    getProductsFromLocalStorage();
-  }, []); //Probably not safe
+  });
 
-  const classes = useStyles();
   return (
     <div>
       <Header
@@ -47,7 +31,7 @@ export default function ShoppingCartPage() {
         fixed
         color="transparent"
         changeColorOnScroll={{
-          height: 300,
+          height: 100,
           color: "info"
         }}
       />
@@ -75,7 +59,7 @@ export default function ShoppingCartPage() {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <SectionCart cart={cart} setCart={setCart} checkOut={checkOut} />
+          <SectionCart />
         </div>
       </div>
     </div>

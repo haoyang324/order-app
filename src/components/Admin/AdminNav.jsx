@@ -43,8 +43,8 @@ export default function AdminNav(props) {
     })
       .then(res => res.json())
       .then(() => {
+        localStorage.clear();
         window.location = "/";
-        localStorage.removeItem("shoppingCartProducts");
       })
       .catch(err => console.log(err));
   };

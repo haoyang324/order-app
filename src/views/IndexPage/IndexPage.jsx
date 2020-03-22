@@ -1,4 +1,5 @@
 import React from "react";
+import { MyContext } from "Context.jsx";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // core components
@@ -8,7 +9,7 @@ import GridItem from "components/Grid/GridItem.js";
 import Parallax from "components/Parallax/Parallax.js";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
-import SectionOffers from "views/EcommercePage/Sections/SectionOffers.jsx";
+import SectionOffers from "views/IndexPage/SectionOffers.jsx";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -16,27 +17,25 @@ import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
 
 const useStyles = makeStyles(styles);
 
-export default function EcommercePage() {
+export default function IndexPage() {
+  const context = React.useContext(MyContext);
   const [products, setProducts] = React.useState([]);
-  const [cart, setCart] = React.useState([]);
-  const [, setNum] = React.useState(0);
 
   const addToCart = (product, qty) => {
-    let tempCart = cart;
+    let tempCart = context.state.cart;
     const productInCart = tempCart.find(element => element._id === product._id);
     if (productInCart) {
       productInCart["quantity"] += qty;
     } else {
       tempCart.push({
         _id: product._id,
-        title: product.title,
+        name: product.name,
         imgURL: product.imgURL,
-        price: product.pricing.$numberDecimal,
+        price: product.price.$numberDecimal,
         quantity: qty
       });
     }
-    setCart(tempCart);
-    setNum(1); // Why it works? Badge won't update without it
+    context.updateCart(tempCart);
     localStorage.setItem("shoppingCartProducts", JSON.stringify(tempCart));
   };
 
@@ -49,50 +48,10 @@ export default function EcommercePage() {
       .then(data => setProducts(data))
       .catch(err => console.log(err));
 
-  const fetchUserStatus = () => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      console.log("Found JWT");
-      console.log(jwt);
-      let statusOK = false;
-      fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/me", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + jwt
-        }
-      })
-        .then(res => {
-          res.status === 200 && (statusOK = true);
-          return res.json();
-        })
-        .then(data => {
-          statusOK &&
-            localStorage.setItem("userProfile", JSON.stringify(data)) &&
-            console.log(data);
-          console.log("Fetch user status res:");
-          console.log(data);
-        })
-        .catch(err => console.log(err));
-    } else {
-      console.log("JWT not found");
-    }
-  };
-  const getCartFromLocalStorage = () => {
-    const productsInLocalStorage = JSON.parse(
-      localStorage.getItem("shoppingCartProducts")
-    );
-    if (productsInLocalStorage) {
-      setCart(productsInLocalStorage);
-    }
-  };
-
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
     fetchProducts();
-    fetchUserStatus();
-    getCartFromLocalStorage();
   }, []); //Probably not a good approach.
 
   const classes = useStyles();
@@ -108,6 +67,7 @@ export default function EcommercePage() {
           color: "info"
         }}
       />
+
       <Parallax
         image={require("assets/img/examples/clark-street-merc.jpg")}
         filter="dark"

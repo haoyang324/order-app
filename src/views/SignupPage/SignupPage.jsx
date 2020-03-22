@@ -1,25 +1,20 @@
-/*eslint-disable*/
-import React, { useState } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { MyContext } from "Context.jsx";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import Timeline from "@material-ui/icons/Timeline";
-import Code from "@material-ui/icons/Code";
 import Group from "@material-ui/icons/Group";
 import Face from "@material-ui/icons/Face";
 import Email from "@material-ui/icons/Email";
 import Check from "@material-ui/icons/Check";
-import Favorite from "@material-ui/icons/Favorite";
 // core components
-import Header from "components/Header/Header.js";
+import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
-import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
@@ -34,10 +29,12 @@ import image from "assets/img/bg7.jpg";
 
 const useStyles = makeStyles(signupPageStyle);
 
-export default function SignUpPage({ ...rest }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function SignUpPage() {
+  let history = useHistory();
+  let context = React.useContext(MyContext);
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const [checked, setChecked] = React.useState([1]);
   const handleToggle = value => {
@@ -52,20 +49,34 @@ export default function SignUpPage({ ...rest }) {
   };
 
   const handleSubmit = e => {
-    event.preventDefault();
+    e.preventDefault();
+    let status = 0;
     let data = {
       name: name,
       email: email,
       password: password
     };
 
-    fetch(process.env.REACT_APP_REST_API_LOCATION + "/users/signup", {
+    fetch(process.env.REACT_APP_REST_API_LOCATION + "/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
-      .then(data => console.log(data))
+      .then(res => {
+        status = res.status;
+        return res.json();
+      })
+      .then(data => {
+        console.log("Signup res: ");
+        console.log(data);
+        if (status === 201) {
+          localStorage.setItem("jwt", data.token);
+          context.updateUserStatus(data);
+          history.push("/");
+        } else {
+          console.log(data.error);
+        }
+      })
       .catch(err => console.log(err));
   };
 
@@ -102,7 +113,7 @@ export default function SignUpPage({ ...rest }) {
                 <CardBody>
                   <GridContainer justify="center">
                     <GridItem xs={12} sm={5} md={5}>
-                      <InfoArea
+                      {/* <InfoArea
                         className={classes.infoArea}
                         title="Marketing"
                         description=""
@@ -115,10 +126,10 @@ export default function SignUpPage({ ...rest }) {
                         description=""
                         icon={Code}
                         iconColor="primary"
-                      />
+                      /> */}
                       <InfoArea
                         className={classes.infoArea}
-                        title="Built Audience"
+                        title="Admin is default"
                         description=""
                         icon={Group}
                         iconColor="info"

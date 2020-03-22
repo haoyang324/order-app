@@ -12,9 +12,12 @@ import Group from "@material-ui/icons/Group";
 import Face from "@material-ui/icons/Face";
 import Email from "@material-ui/icons/Email";
 import Check from "@material-ui/icons/Check";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 // core components
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
+import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
@@ -251,6 +254,29 @@ export default function SignUpPage() {
             </GridItem>
           </GridContainer>
         </div>
+        <Footer
+          content={
+            <div>
+              <div className={classes.left}>
+                <List className={classes.list}>
+                  <ListItem className={classes.inlineBlock}>
+                    <span className={classes.block}>Place Holder</span>
+                  </ListItem>
+                  <ListItem className={classes.inlineBlock}>
+                    <span className={classes.block}>About us</span>
+                  </ListItem>
+                  <ListItem className={classes.inlineBlock}>
+                    <span className={classes.block}>Blog</span>
+                  </ListItem>
+                  <ListItem className={classes.inlineBlock}>
+                    <span className={classes.block}>Licenses</span>
+                  </ListItem>
+                </List>
+              </div>
+              <div className={classes.right}>For a better web.</div>
+            </div>
+          }
+        />
       </div>
     </div>
   );

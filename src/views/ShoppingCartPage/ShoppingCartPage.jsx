@@ -3,9 +3,12 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 // core components
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
+import Footer from "components/Footer/Footer.jsx";
 import SectionCart from "views/ShoppingCartPage/SectionCart.jsx";
 import Parallax from "components/Parallax/Parallax.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -62,6 +65,29 @@ export default function ShoppingCartPage() {
           <SectionCart />
         </div>
       </div>
+      <Footer
+        content={
+          <div>
+            <div className={classes.left}>
+              <List className={classes.list}>
+                <ListItem className={classes.inlineBlock}>
+                  <span className={classes.block}>Place Holder</span>
+                </ListItem>
+                <ListItem className={classes.inlineBlock}>
+                  <span className={classes.block}>About us</span>
+                </ListItem>
+                <ListItem className={classes.inlineBlock}>
+                  <span className={classes.block}>Blog</span>
+                </ListItem>
+                <ListItem className={classes.inlineBlock}>
+                  <span className={classes.block}>Licenses</span>
+                </ListItem>
+              </List>
+            </div>
+            <div className={classes.right}>For a better web.</div>
+          </div>
+        }
+      />
     </div>
   );
 }

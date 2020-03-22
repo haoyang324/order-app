@@ -7,9 +7,12 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 // core components
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
+import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
@@ -169,6 +172,30 @@ export default function LoginPage() {
             </GridItem>
           </GridContainer>
         </div>
+        <Footer
+          className={classes.footer}
+          content={
+            <div>
+              <div className={classes.left}>
+                <List className={classes.list}>
+                  <ListItem className={classes.inlineBlock}>
+                    <span className={classes.block}>Place Holder</span>
+                  </ListItem>
+                  <ListItem className={classes.inlineBlock}>
+                    <span className={classes.block}>About us</span>
+                  </ListItem>
+                  <ListItem className={classes.inlineBlock}>
+                    <span className={classes.block}>Blog</span>
+                  </ListItem>
+                  <ListItem className={classes.inlineBlock}>
+                    <span className={classes.block}>Licenses</span>
+                  </ListItem>
+                </List>
+              </div>
+              <div className={classes.right}>For a better web.</div>
+            </div>
+          }
+        />
       </div>
     </div>
   );

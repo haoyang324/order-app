@@ -59,133 +59,139 @@ export default function SectionCart() {
 
   return (
     <div className={classes.section}>
-      <div className={classes.container}></div>
-      <h2>Shopping Cart</h2>
+      <div className={classes.container}>
+        <h2>Shopping Cart</h2>
 
-      {cart.length ? (
-        cart.map(product => (
-          <Grid container spacing={3} key={product._id}>
-            <Grid item xs={12} sm={4} lg={4}>
-              <img
-                className={classes.imgCard}
-                src={product.imgURL}
-                alt="Card-img"
-              />
-            </Grid>
-            <Grid item xs={12} sm={8} lg={8} style={{ margin: "auto" }}>
-              <CardBody plain style={{ marginBottom: 80, marginTop: 0 }}>
-                <h4 className={classes.cardTitle}>{product.name}</h4>
-                <div>
-                  <div style={{ float: "left" }}>
-                    <span>Qty:</span>
-                    <Button
-                      onClick={() => handleQtyChange(product, -1)}
-                      justIcon
-                      simple
-                      size="sm"
-                      color="rose"
-                    >
-                      <Remove />
-                    </Button>
-                    <span>{getQty(product)}</span>
-                    <Button
-                      onClick={() => handleQtyChange(product, 1)}
-                      justIcon
-                      simple
-                      size="sm"
-                      color="rose"
-                    >
-                      <Add />
-                    </Button>
-                  </div>
-                  <div style={{ float: "right", marginRight: 20 }}>
-                    <span>${product.price}</span>
-                    <Tooltip
-                      title="Remove item"
-                      placement="top"
-                      classes={{ tooltip: classes.tooltip }}
-                    >
+        {cart.length ? (
+          cart.map(product => (
+            <Grid container spacing={3} key={product._id}>
+              <Grid item xs={12} sm={4} lg={4}>
+                <img
+                  className={classes.imgCard}
+                  src={product.imgURL}
+                  alt="Card-img"
+                />
+              </Grid>
+              <Grid item xs={12} sm={8} lg={8} style={{ margin: "auto" }}>
+                <CardBody plain style={{ marginBottom: 80, marginTop: 0 }}>
+                  <h4 className={classes.cardTitle}>{product.name}</h4>
+                  <div>
+                    <div style={{ float: "left" }}>
+                      <span>Qty:</span>
                       <Button
-                        link
-                        className={classes.actionButton}
-                        onClick={() => handleQtyChange(product, 0)}
+                        onClick={() => handleQtyChange(product, -1)}
+                        justIcon
+                        simple
                         size="sm"
+                        color="rose"
                       >
-                        <Close />
+                        <Remove />
                       </Button>
-                    </Tooltip>
+                      <span>{getQty(product)}</span>
+                      <Button
+                        onClick={() => handleQtyChange(product, 1)}
+                        justIcon
+                        simple
+                        size="sm"
+                        color="rose"
+                      >
+                        <Add />
+                      </Button>
+                    </div>
+                    <div style={{ float: "right", marginRight: 20 }}>
+                      <span>${product.price}</span>
+                      <Tooltip
+                        title="Remove item"
+                        placement="top"
+                        classes={{ tooltip: classes.tooltip }}
+                      >
+                        <Button
+                          link
+                          className={classes.actionButton}
+                          onClick={() => handleQtyChange(product, 0)}
+                          size="sm"
+                        >
+                          <Close />
+                        </Button>
+                      </Tooltip>
+                    </div>
                   </div>
-                </div>
-              </CardBody>
+                </CardBody>
+              </Grid>
             </Grid>
-          </Grid>
-        ))
-      ) : (
-        <h4> Your cart empty</h4>
-      )}
-      {cart.length ? (
-        <div className={classes.buttons}>
-          {context.state.loggedIn ? (
-            <Link
-              to={{
-                pathname: "/checkout",
-                state: {
-                  cart: cart,
-                  guest: false
-                }
-              }}
-            >
-              <Button
-                className={classes.button}
-                type="button"
-                color="warning"
-                round
-              >
-                <DoneAllIcon className={classes.icons} /> Checkout
-              </Button>
-            </Link>
-          ) : (
-            <div>
-              <Link to="/login">
-                <Button
-                  className={classes.button}
-                  type="button"
-                  color="info"
-                  round
-                >
-                  <PersonIcon className={classes.icons} /> Login
-                </Button>
-              </Link>
+          ))
+        ) : (
+          <h4> Your cart empty</h4>
+        )}
+        {cart.length ? (
+          <div className={classes.buttons}>
+            {context.state.loggedIn ? (
               <Link
                 to={{
                   pathname: "/checkout",
                   state: {
                     cart: cart,
-                    guest: true
+                    guest: false
                   }
                 }}
               >
                 <Button
                   className={classes.button}
                   type="button"
-                  color="info"
+                  color="warning"
                   round
                 >
-                  <DoneAllIcon className={classes.icons} /> Checkout As Guest
+                  <DoneAllIcon className={classes.icons} /> Checkout
                 </Button>
               </Link>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div>
-          <Link to="/">
-            <Button type="button" color="info" round style={{ float: "right" }}>
-              <DoneAllIcon className={classes.icons} /> Get Something!
-            </Button>
-          </Link>
-        </div>
-      )}
+            ) : (
+              <div>
+                <Link to="/login">
+                  <Button
+                    className={classes.button}
+                    type="button"
+                    color="info"
+                    round
+                  >
+                    <PersonIcon className={classes.icons} /> Login
+                  </Button>
+                </Link>
+                <Link
+                  to={{
+                    pathname: "/checkout",
+                    state: {
+                      cart: cart,
+                      guest: true
+                    }
+                  }}
+                >
+                  <Button
+                    className={classes.button}
+                    type="button"
+                    color="info"
+                    round
+                  >
+                    <DoneAllIcon className={classes.icons} /> Checkout As Guest
+                  </Button>
+                </Link>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            <Link to="/">
+              <Button
+                type="button"
+                color="info"
+                round
+                style={{ float: "right" }}
+              >
+                <DoneAllIcon className={classes.icons} /> Get Something!
+              </Button>
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

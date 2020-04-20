@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 
 import AdminNav from "components/Admin/AdminNav.jsx";
-import AdminOrdersTable from "components/Admin/AdminOrdersTable.jsx";
+import AdminOrdersTable from "./AdminOrdersTable.jsx";
 
 const useStyles = makeStyles(theme => ({
   root: {

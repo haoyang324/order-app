@@ -5,7 +5,7 @@ import { MyProvider } from "Context.jsx";
 import IndexPage from "views/IndexPage/IndexPage.jsx";
 // pages for admin
 import AdminHome from "views/AdminPages/AdminHome.jsx";
-import AdminOrdersPage from "views/AdminPages/AdminOrdersPage.jsx";
+import AdminOrdersPage from "views/AdminPages/Orders/AdminOrdersPage.jsx";
 import AdminProductsPage from "views/AdminPages/AdminProductsPage.jsx";
 import AdminProductsAdd from "views/AdminPages/AdminProductsAdd.jsx";
 import AdminProductsEdit from "views/AdminPages/AdminProductsEdit.jsx";

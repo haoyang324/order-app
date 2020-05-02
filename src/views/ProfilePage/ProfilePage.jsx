@@ -4,6 +4,7 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
 // @material-ui/icons
 // core components
 import Header from "components/Header/Header.jsx";
@@ -11,7 +12,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Parallax from "components/Parallax/Parallax.js";
-import Clearfix from "components/Clearfix/Clearfix.js";
+import CustomInput from "components/CustomInput/CustomInput.js";
 
 import christian from "assets/img/faces/christian.jpg";
 
@@ -35,14 +36,12 @@ export default function ProfilePage() {
     <div>
       <Header
         brand="Brand Name"
-        links={
-          <HeaderLinks dropdownHoverColor="info" />
-        }
+        links={<HeaderLinks dropdownHoverColor="info" />}
         fixed
         color="transparent"
         changeColorOnScroll={{
           height: 300,
-          color: "info"
+          color: "info",
         }}
       />
       <Parallax
@@ -64,10 +63,101 @@ export default function ProfilePage() {
               </div>
             </GridItem>
           </GridContainer>
-          <div className={classes.profileTabs}>
-            
-          </div>
-          <Clearfix />
+          <div className={classes.profileTabs}></div>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={3}>
+              <CustomInput
+                labelText="Name"
+                id="name"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+            </GridItem>
+            <GridItem xs={12} sm={12} md={5}>
+              <CustomInput
+                labelText="Phone"
+                id="phone"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+            </GridItem>
+            <GridItem xs={12} sm={12} md={4}>
+              <CustomInput
+                labelText="Email address"
+                id="email-address"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+            </GridItem>
+          </GridContainer>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={6}>
+              <CustomInput
+                labelText="First Name"
+                id="first-name"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+            </GridItem>
+            <GridItem xs={12} sm={12} md={6}>
+              <CustomInput
+                labelText="Last Name"
+                id="last-name"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+            </GridItem>
+          </GridContainer>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={4}>
+              <CustomInput
+                labelText="City"
+                id="city"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+            </GridItem>
+            <GridItem xs={12} sm={12} md={4}>
+              <CustomInput
+                labelText="Country"
+                id="country"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+            </GridItem>
+            <GridItem xs={12} sm={12} md={4}>
+              <CustomInput
+                labelText="Postal Code"
+                id="postal-code"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+            </GridItem>
+          </GridContainer>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
+              <CustomInput
+                labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
+                id="about-me"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+                inputProps={{
+                  multiline: true,
+                  rows: 5,
+                }}
+              />
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     </div>

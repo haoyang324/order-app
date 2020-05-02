@@ -94,13 +94,13 @@ export default function HeaderLinks(props) {
               color: "transparent"
             }}
             dropdownList={[
-              <Link
-                to="/profile"
-                className={classes.dropdownLink}
-                key={"profile"}
-              >
-                Profile
-              </Link>,
+              // <Link
+              //   to="/profile"
+              //   className={classes.dropdownLink}
+              //   key={"profile"}
+              // >
+              //   Profile
+              // </Link>,
               <Link
                 to="/orders"
                 className={classes.dropdownLink}

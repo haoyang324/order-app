@@ -19,7 +19,6 @@ import Typography from "@material-ui/core/Typography";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import HomeIcon from "@material-ui/icons/Home";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PeopleIcon from "@material-ui/icons/People";
 
@@ -65,7 +64,7 @@ export default function AdminNav(props) {
       </List>
       <Divider />
       <List>
-        {["Home", "Orders", "Products", "Customers"].map(text => (
+        {["Products", "Orders", "Customers"].map(text => (
           <ListItem
             button
             onClick={() =>
@@ -75,12 +74,10 @@ export default function AdminNav(props) {
             key={text}
           >
             <ListItemIcon>
-              {text === "Home" ? (
-                <HomeIcon />
+              {text === "Products" ? (
+                <LocalOfferIcon />
               ) : text === "Orders" ? (
                 <AttachMoneyIcon />
-              ) : text === "Products" ? (
-                <LocalOfferIcon />
               ) : (
                 <PeopleIcon />
               )}

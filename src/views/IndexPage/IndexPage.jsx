@@ -2,16 +2,19 @@ import React from "react";
 import { MyContext } from "Context.jsx";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+// @material-ui/core components
+import { makeStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 // core components
 import Header from "components/Header/Header.jsx";
+import HeaderLinks from "components/Header/HeaderLinks.jsx";
+import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Parallax from "components/Parallax/Parallax.js";
 // sections for this page
-import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import SectionOffers from "views/IndexPage/SectionOffers.jsx";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
 
@@ -99,7 +102,29 @@ export default function IndexPage() {
         <SectionOffers products={products} addToCart={addToCart} />
       </div>
 
-      {/* <SectionBlog /> */}
+      <Footer
+        content={
+          <div>
+            <div className={classes.left}>
+              <List className={classes.list}>
+                <ListItem className={classes.inlineBlock}>
+                  <span className={classes.block}>Place Holder</span>
+                </ListItem>
+                <ListItem className={classes.inlineBlock}>
+                  <span className={classes.block}>About us</span>
+                </ListItem>
+                <ListItem className={classes.inlineBlock}>
+                  <span className={classes.block}>Blog</span>
+                </ListItem>
+                <ListItem className={classes.inlineBlock}>
+                  <span className={classes.block}>Licenses</span>
+                </ListItem>
+              </List>
+            </div>
+            <div className={classes.right}>For a better web.</div>
+          </div>
+        }
+      />
     </div>
   );
 }

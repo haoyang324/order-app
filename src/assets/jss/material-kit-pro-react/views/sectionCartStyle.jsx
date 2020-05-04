@@ -44,6 +44,9 @@ const styles = {
   textCenter: {
     textAlign: "center"
   },
+  productContainer: {
+    paddingBottom: "30px"
+  },
   cardMedia: {
     height: 140,
     width: 140

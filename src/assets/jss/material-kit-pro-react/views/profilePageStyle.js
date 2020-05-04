@@ -140,8 +140,11 @@ const profilePageStyle = {
     position: "relative"
   },
   parallax: {
-    height: "380px",
+    height: "150px",
     backgroundPosition: "top center"
+  },
+  pageTitle: {
+    padding: "70px 0px"
   }
 };
 

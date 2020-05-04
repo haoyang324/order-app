@@ -3,7 +3,7 @@ import MaterialTable from "material-table";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
 
-export default function AdminOrdersTable() {
+export default function AdminProductTable() {
   const [state, setState] = React.useState({
     columns: [
       {

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 
 import AdminNav from "components/Admin/AdminNav.jsx";
-import AdminOrdersTable from "components/Admin/AdminOrdersTable.jsx";
+import AdminCustomersTable from "./AdminCustomersTable.jsx";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,20 +17,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AdminPage() {
+export default function AdminCustomersPage() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AdminNav title="Orders" />
+      <AdminNav title="Customers" />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <AdminOrdersTable />
+        <AdminCustomersTable />
       </main>
     </div>
   );
 }
 
-AdminPage.propTypes = {
+AdminCustomersPage.propTypes = {
   container: PropTypes.any
 };

@@ -77,7 +77,7 @@ export default function SignUpPage() {
           context.updateUserStatus(data);
           history.push("/");
         } else {
-          console.log(data.error);
+          alert(data.error);
         }
       })
       .catch(err => console.log(err));

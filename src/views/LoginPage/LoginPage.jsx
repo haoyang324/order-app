@@ -58,7 +58,7 @@ export default function LoginPage() {
           // console.log(data);
           history.push("/");
         } else {
-          console.log(data.error);
+          alert(data.error);
         }
       })
       .catch(err => console.log(err));

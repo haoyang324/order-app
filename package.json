@@ -10,7 +10,7 @@
     "classnames": "2.2.6",
     "history": "4.9.0",
     "material-table": "^1.57.2",
-    "moment": "2.24.0",
+    "moment": "^2.29.3",
     "node-sass": "^4.14.1",
     "nouislider": "14.0.2",
     "prop-types": "15.7.2",

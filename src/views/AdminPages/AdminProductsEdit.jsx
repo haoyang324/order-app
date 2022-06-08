@@ -187,7 +187,7 @@ export default function AdminProductsEdit(props) {
 
   React.useEffect(() => {
     fetchProducts();
-  }, []); //Probably not a good approach.
+  }); 
 
   return (
     <div className={classes.root}>

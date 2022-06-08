@@ -14,7 +14,6 @@ import SignupPage from "views/SignupPage/SignupPage.jsx";
 import LoginPage from "views/LoginPage/LoginPage.jsx";
 import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
 import OrderHistoryPage from "views/OrderHistoryPage/OrderHistoryPage.jsx";
-import OrderDetailsPage from "views/OrderHistoryPage/OrderDetailsPage.jsx";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.jsx";
 import CheckoutPage from "views/CheckoutPage/CheckoutPage.jsx";
 
@@ -37,7 +36,6 @@ export default function App() {
           <Route path="/login" component={LoginPage} />
           <Route path="/profile" component={ProfilePage} />
           <Route path="/orders" component={OrderHistoryPage} />
-          <Route path="/orders/:id" component={OrderDetailsPage} />
           <Route path="/shopping-cart" component={ShoppingCartPage} />
           <Route path="/checkout" component={CheckoutPage} />
         </Switch>
